@@ -5,11 +5,11 @@
 %% final look of the document.
 
 % Dependencies
-\usepackage{ETHlogo}
+%\usepackage{ETHlogo}
 
 % use helvetica as default font:
 \usepackage[scaled]{helvet}
-\renewcommand\familydefault{\sfdefault} 
+%\renewcommand\familydefault{\sfdefault} 
 
 % Turn extra space before chapter headings off.
 \setlength{\beforechapskip}{0pt}
@@ -155,38 +155,57 @@
 	}
 	\newcommand*\titlestyleright{
 		\thispagestyle{empty}
+		\begin{minipage}[c]{0.35\linewidth}
+			\vspace{0pt}
+			\includegraphics[width=\linewidth]{images/ost_logo_de_rgb-eps-converted-to}
+		\end{minipage}
+		%
+		\begin{minipage}[c]{0.4\linewidth}
+			\vspace{0pt}
+			\-\
+		\end{minipage}
+		%
+		\begin{minipage}[c]{0.25\linewidth}
+			\vspace{0pt}
+			\includegraphics[width=\linewidth]{images/legic-logo}
+		\end{minipage}
+		\vspace{2cm}
 		\sffamily
 		\vspace*{\stretch{6}}
 		\begin{flushright}
-		{\Huge\sffamily\bfseries\@title}
+		{\Huge\sffamily\bfseries\@title\par}
 		\par\noindent\rule[-1ex]{\linewidth}{2pt}\par
 		\vspace{0.5cm}
 		\emph{\huge\sffamily\@thesistype}
 		\vspace{2cm}\par
-		{\LARGE\sffamily\bfseries\@author}\par
-		{\sffamily\@email}\par
+		{\LARGE\sffamily\bfseries Flurin Arquint}\par
+		{\sffamily\ \href{mailto:flurin.arquint@ost.ch}{flurin.arquint@ost.ch}}\par
+		\vspace{0.5cm}
+		{\LARGE\sffamily\bfseries Jan Brupbacher}\par
+		{\sffamily\ \href{mailto:jan.brupbacher@ost.ch}{jan.brupbacher@ost.ch}}\par
 		\vspace{1cm}
     	{\large\textbf{Advisor}\par
     		\@advisor\par}
     	\vspace{0.5cm}
-    	{\large\textbf{Supervisor}\par
+    	{\large\textbf{Examiner}\par
     		\@supervisor\par}
     	\vspace{1cm}
-    	{\@group\par
-    		\@institute\par
-        	\@department\par
+    	{\@institute\par
         	\@school\par}
     	\vspace{1cm}
     	{\normalsize\@date\par}
 		\end{flushright}
 		\vspace{\stretch{1}}
-		\noindent\ETHlogo[2in]
+		\noindent%\ETHlogo[2in]
 		\pagebreak 
     	\sffamily
     	\thispagestyle{empty} 
 	}
 \fi
 
+%Change margins
+\setlrmarginsandblock{3.5cm}{3cm}{*}
+\setulmarginsandblock{3cm}{*}{1}
 \checkandfixthelayout
 
 \setlength{\droptitle}{-48pt}

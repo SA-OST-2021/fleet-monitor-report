@@ -6,7 +6,7 @@
 
 
 %% We use the memoir class because it offers a many easy to use features.
-\documentclass[11pt,a4paper,titlepage]{memoir}
+\documentclass[11pt,a4paper,titlepage,table]{memoir}
 
 %% Packages
 %% ========
@@ -29,7 +29,7 @@
 
 %% This changes default fonts for both text and math mode to use Herman Zapfs
 %% excellent Palatino font.  Do not change this.
-\usepackage[sc]{mathpazo}
+%\usepackage[sc]{mathpazo}
 
 %% The AMS-LaTeX extensions for mathematical typesetting.  Do not
 %% remove.
@@ -55,41 +55,51 @@
 
 %% Some more packages that you may want to use.  Have a look at the
 %% file, and consult the package docs for each.
-\input{extrapackages}
+\input{header/extrapackages}
 
 %% Our layout configuration.  DO NOT CHANGE.
-\input{layoutsetup}
+\input{header/layoutsetup}
 
 %% Theorem environments.  You will have to adapt this for a German
 %% thesis.
-\input{theoremsetup}
+\input{header/theoremsetup}
 
 %% Helpful macros.
-\input{macrosetup}
+\input{header/macrosetup}
 
-%% acronyms used in this thesis:
-\input{acro}
+%% This allow the usage of dashed and dotted lines in tables
+\usepackage{arydshln}
+\usepackage{hhline}
+
+\usepackage{siunitx}
+
+\usepackage{caption}
+\usepackage{subcaption}
+\DeclareCaptionFont{fcaption}{\footnotesize}
+\captionsetup{labelfont={sf, bf}, textfont=sf, font=fcaption}
+\captionsetup[sub]{font=fcaption,labelfont={sf}}
+
 
 %% Make document internal hyperlinks wherever possible. (TOC, references)
 %% This MUST be loaded after varioref, which is loaded in 'extrapackages'
 %% above.  We just load it last to be safe.
-\usepackage[linkcolor=black,colorlinks=true,citecolor=black,filecolor=black]{hyperref}
-
+\usepackage[linkcolor=black,colorlinks=false,citecolor=black,filecolor=black]{hyperref}
+\usepackage[capitalize, noabbrev]{cleveref}
 
 %% Document information
 %% ====================
 
-\title{Title of Thesis}
+\title{UWB for Data Transfer \& Positioning}
 \author{S. Tudent}
 \email{abc@abc.com}
-\thesistype{Master's Thesis}
-\advisor{Dr.\ P. Ostdoc}
-\supervisor{Prof.\ Dr.\ A. D. Visor}
+\thesistype{Bachelor's Thesis}
+\advisor{Nicola Ramagnano}
+\supervisor{Prof.\ Dr.\ Heinz Mathis}
 \group{Programming Methodology}
-\institute{Institute for Programming Languages and Systems}
-\department{Department of Computer Science}
-\school{ETH Z\"urich}
-\date{January 19, 2038}
+\institute{Institute for Communication Systems}
+\department{Department of Electrical Engineering}
+\school{Eastern Switzerland University of Applied Sciences}
+\date{June 2021}
 
 \begin{document}
 
@@ -100,7 +110,7 @@
 \maketitlepage
 
 %% The abstract of your thesis.  Edit the file as needed.
-\input{0_abstract}
+\input{sections/0_abstract}
 
 %% reset acronym usage:
 \acresetall
@@ -109,22 +119,30 @@
 \cleartorecto
 \tableofcontents
 \mainmatter
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+
+%% acronyms used in this thesis:
+\chapter*{Acronyms}
+\input{sections/acro}
 
 %% Your real content!
-\input{1_introduction}
-\input{2_rules}
-\input{3_typography}
-\input{4_sections}
+\input{sections/1_task}
+\input{sections/2_introduction}
+\input{sections/3_projectplan_requirements}
+\input{sections/4_theory}
+\input{sections/5_development/5_development}
+\input{sections/6_Measurements/6_measurements}
+\input{sections/7_results}
+\input{sections/8_summary_conclusion}
 
 \appendix
 
-\input{a_appendix}
+\input{sections/a_appendix}
 
 \backmatter
 
 \bibliographystyle{plain}
-\bibliography{bibliography}
-
-\includepdf[pages={-}]{declaration-originality.pdf}
+\typeout{}
+\bibliography{./sections/bibliography}
 
 \end{document}
