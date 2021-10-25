@@ -12,6 +12,7 @@
 %\usepackage[german=swiss]{csquotes}
 
 %% [REC] Format dates and time depending on locale
+\let\ordinal\relax %% prevent warning
 \usepackage{datetime}
 
 %% [OPT] Provides a \cancel{} command to stroke through mathematics.
@@ -55,7 +56,7 @@
 % \lstset{language=TeX,basicstyle={\normalfont\ttfamily}}
 
 %% [REC] Fancy character protrusion.  Must be loaded after all fonts.
-\usepackage[activate]{pdfcprot}
+%\usepackage[activate]{pdfcprot}
 
 %% [REC] Nicer tables.  Read the excellent documentation.
 \usepackage{booktabs}

@@ -6,7 +6,7 @@
 
 
 %% We use the memoir class because it offers a many easy to use features.
-\documentclass[11pt,a4paper,titlepage,table]{memoir}
+\documentclass[11pt,a4paper,table]{memoir}  %% TODO: Maybe ,titlepage needs to be added?
 
 %% Packages
 %% ========
@@ -76,8 +76,8 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \DeclareCaptionFont{fcaption}{\footnotesize}
-\captionsetup{labelfont={sf, bf}, textfont=sf, font=fcaption}
-\captionsetup[sub]{font=fcaption,labelfont={sf}}
+%\captionsetup{labelfont={sf, bf}, textfont=sf, font=fcaption}
+%\captionsetup[sub]{font=fcaption,labelfont={sf}}
 
 
 %% Make document internal hyperlinks wherever possible. (TOC, references)
@@ -129,8 +129,8 @@
 %%\input{sections/1_task}
 \input{sections/1_introduction}
 \input{sections/2_projectplan_requirements}
-%%\input{sections/4_theory}
-%%\input{sections/5_development/5_development}
+\input{sections/3_system_overview}
+\input{sections/4_hardware}
 %%\input{sections/6_Measurements/6_measurements}
 %%\input{sections/7_results}
 %%\input{sections/8_summary_conclusion}
