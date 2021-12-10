@@ -1,4 +1,4 @@
-# LaTex Template for a Thesis at ETH Zurich 
+# Fleet Monitor Report
 
 Based on the [CADMO](https://www.cadmo.ethz.ch/education/thesis/template.html) template.
 
