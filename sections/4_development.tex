@@ -1,16 +1,16 @@
 \chapter{Development}
 
+%% Section Hardware Design %%
 \section{Hardware Design}
 The hardware of the Fleet-Monitor was design using Altium Designer 21. The integrated 3D \acrshort{cad} functionality simplified the overall development and lowered the chance of errors in the design. The 4-Layer \acrfull{pcb} with the size of 140.5 mm x 79.5 mm has been manufactured and assembled by JLCPCB.\newline
 As a proof of concept, five prototypes have been made, which are all fully tested and in working condition.
 
-\todo{Add Rendering of PCB only}
-\medskip
 \begin{figure}[h!]
-	\centering
-	\includegraphics[height=9cm]{images/fleet-monitor-rendering}
+	\hfuzz=57.0pt
+	\hspace{-1.4cm}
+	\includegraphics[height=10.0cm]{images/fleet-monitor-rendering-pcb}
 	\caption{Assembled PCB 3D-Render}
-	\label{fig:fleet-monitor-rendering}
+	\label{fig:fleet-monitor-rendering-pcb}
 \end{figure}
 
 \subsection{Power Management}
@@ -20,7 +20,7 @@ The external power source accepts a voltage range from 9 V to 28 V and is protec
 The core of the power management unit is based on a Recom DC-DC converter of the RPMB-2.0 series. The very compact design, great performance and fairly low price offers an optimal solution.\newline
 The total power consumption of the device is in average around 1.5 W.
 
-\todo{Add PTC Fuse in fron of diode in diagram}
+\bigskip
 \begin{figure}[h!]
 	\centering
 	\includegraphics[height=5cm]{images/power}
@@ -59,8 +59,7 @@ For uploading code via the \acrshort{usb}-Interface, the ESP32-S2 has to be set 
 \newpage
 
 \subsection{Ethernet Interface}
-The Ethernet interface utilizes a WIZNet W5500 Ethernet controller chip with an integrated \acrshort{phy} and \acrshort{tcp/ip} stack. It is capable of transmission speeds of 10 or 100 MBit/s. The chip is connected through \acrshort{spi} with the main processing unit (\gls{esp32}).
-The IEEE standard 802.3 specifies a 1500 V\textsubscript{RMS} isolation barrier between the Ethernet PHY Chip and the cable. To comply with these requirements a pulse transformer was used to magnetically couple the data lines between the connector and the chip. Additionally a ground clearance of \todo{add distance} mm was chosen to avoid flash over or tracking between electrical conductors as seen in \todo{add image}. 
+In order to connect the device to a host server, an Ethernet interface was added.
 
 \begin{figure}[h!]
 	\centering
@@ -70,7 +69,11 @@ The IEEE standard 802.3 specifies a 1500 V\textsubscript{RMS} isolation barrier 
 	\label{fig:eth-interface}
 \end{figure}
 
-\todo[inline]{Write about Ethercon ® connector}
+\subsubsection{Controller}
+The Ethernet interface utilizes a WIZNet W5500 Ethernet controller chip with an integrated \acrshort{phy} and \acrshort{tcp/ip} stack. It is capable of transmission speeds of 10 or 100 MBit/s. The chip is connected through \acrshort{spi} with the main processing unit (\gls{esp32}).
+
+\subsubsection{Isolation}
+The IEEE standard 802.3 specifies a 1500 V\textsubscript{RMS} isolation barrier between the Ethernet PHY Chip and the cable. To comply with these requirements a pulse transformer was used to magnetically couple the data lines between the connector and the chip. Additionally a ground clearance of \todo{add distance} mm was chosen to avoid flash over or tracking between electrical conductors as seen in Figure \ref{fig:eth-pcb}. 
 
 \begin{figure}[h!]
 	\centering
@@ -79,6 +82,9 @@ The IEEE standard 802.3 specifies a 1500 V\textsubscript{RMS} isolation barrier 
 	\vspace{-1.4ex}
 	\label{fig:eth-pcb}
 \end{figure}
+
+\subsubsection{Connector}
+The EtherCON RJ45 is a lockable connector system, it was chosen for its rugged design and water resistance. This connector system is often used in industrial applications, e.g. in the event industry. The receptacle accepts regular RJ45 plugs as well, but the use of proper EtherCON connectors is recommended.
 
 \newpage
 
@@ -107,16 +113,17 @@ A dual-channel digital isolator (ISO7221BDR) was used in conjunction with an iso
 	\label{fig:can-pcb}
 \end{figure}
 
-\subsubsection{Filter}
+\subsubsection{Filtering}
 A common mode choke as well as bypass capacitors were added to the differential signal lines. A common mode choke is an electrical filter that blocks high frequency noise common to two or more data or power lines while allowing the desired DC or low-frequency signal to pass. Common mode (CM) noise is typically radiated from sources such as radio signals, unshielded electronics, inverters and motors. Additionally matching capacitors on the CANH and CANL lines were added to enhance the immunity against electromagnetic interference. 
 
 \subsubsection{Connector}
-The FMS Standard specifies a DIN 72585 connector as the default physical interface. Since these connectors are only available for panel mount, an additional wire to board connector was selected. A Molex \todo{connector name} was chosen because its widely available and being used in lots of applications.\newline
+The FMS Standard specifies a DIN 72585 connector as the default physical interface. Since these connectors are only available for panel mount, an additional wire to board connector was selected. A Molex \todo{connector name} was chosen because its widely available and being used in lots of applications.
 
 \subsubsection{Termination}
 In addition the FMS Standard specifies a 120$\Omega$ CAN termination resistor to be added on the monitor side. To fulfill this requirement and to make it compatible with system that do not need that resistor, a jumper was added to enable/disable the termination.   
+
 \subsection{Accelerometer}
-Luca
+By request of the industry partner an accelerometer was added to gather additional data. The LIS2DH12 is an ultra-low-power high-performance three-axis linear accelerometer with digital I2C/SPI serial interface output. The sensor has user-selectable scales of ±2g up to ±16g and is capable of measuring accelerations with output rates from 1 Hz to 5.3 kHz. The sensor is connected through SPI to the ESP32.
 
 \newpage
 \section{Mechanical Design}
@@ -131,25 +138,49 @@ The case has been machined in the internal workshop of the university. The corre
 	\caption{Final Product 3D-Render}
 	\label{fig:fleet-monitor-rendering}
 \end{figure}
-
-
 \newpage
+
+%% Section Firmware %%
 \section{Firmware}
 The firmware is written in C++ and is based on a combination of the Arduino and the ESP-IDF framework. As an IDE, Visual Studio Code with PlatformIO as an add-on has been used. This modern environment ensures rapid and effective development.\newline
 FreeRTOS has been used as a real time operating system, which guarantees a reliable operation and handles multi-task operations even on a single core system.\newline
 The Arduino framework offers extensive library support, especially for the \acrshort{usb} peripheral, file system and Ethernet interface. Due to the large community and the open source licensing, lots of individuals contribute bug-fixes and therefor increase the robustness of the software stack.
 
-\subsection{USB and File system}
+\subsection{File system}
 The file system is an essential part of the device firmware. It enables accessing files stored on the internal \acrshort{spi}-Flash chip as well as creating an interface for additional libraries.
+The flash chip has a memory capacity of 4 MB and is partitioned into four different sections. The size of each partition can be adjusted in the ${\textit partitions\_custom.csv}$ file. Basically the memory is split into two partitions with ruffly the same size ($\approx$ 2 KB each) as a reasonable compromise between program memory and file system storage.
 
-\medskip
+\begin{table}[h]
+    \begin{tabular}{ | m{3.15cm} | m{3.15cm}| m{3.15cm} | m{3.15cm} |} 
+      \hline
+      \multicolumn{1}{|c|}{\textbf{Name}} & \multicolumn{1}{c|}{\textbf{Type}} & \multicolumn{1}{c|}{\textbf{Offset}} & \multicolumn{1}{c|}{\textbf{Size}}\\ \hline
+      nvs & data & \codeword{0x009000} & 20K \\ \hline
+      otadata & data & \codeword{0x00E000} & 8K \\  \hline
+      app0 & app & \codeword{0x010000} & 2048K \\  \hline
+      ffat & data & \codeword{0x210000} & 1984K \\  \hline
+    \end{tabular}
+    \caption{\label{tab:Flash-Partitions}SPI-Flash Partitions}
+\end{table}
+
+To provide a sufficient set of features, multiple libraries had to be used. Most of them are created by Adafruit Industries under \acrshort{mit} licensing. \newline
+As a low-level \acrshort{spi}-Flash chip driver, the \codeword{Adafruit SPIFlash} library has been used. It handles the communication over the physical interface and provides access to the file system library named  \codeword{SdFAT}. The type of file system is \acrshort{fat}, which has the advantage of being compatible with most modern operating systems (Windows/Linux/Mac OS). Figure \ref{fig:file_system_stack} shows an overview of all utilized core library and how they are dependent.
+
+\bigskip
 \begin{figure}[h!]
 	\centering
-	\includegraphics[height=4cm]{images/file_system_stack.pdf}
+	\includegraphics[height=5.2cm]{images/file_system_stack.pdf}
 	\caption{USB and File System Library Stack}
 	\label{fig:file_system_stack}
 \end{figure}
+\newpage
 
+
+\subsection{USB Mass Storage Device}
+\acrshort{usb} is known to be a very complex interface, however it provides lots of comport to an end-user. To enable \acrshort{usb} support on an embedded system, several layers of software are needed. Fortunately the open source project called TinyUSB supports the ESP32-S2 \acrshort{soc} family. This very comprehensive software stack supports the \acrshort{usb} \acrfull{msc} protocol.
+As a result, the device acts just like a regular \acrshort{usb} Flash drive and provides seamless file access to any host computer. \newline
+To pack all setup and configuration functions of the mentioned libraries together, an utility library has been made. The \codeword{utils_init()} function checks if the \acrshort{spi}-Flash chip has already been correctly formatted, if this is not the case, an automatic formatting procedure gets executed. In this process, a disk label can be set with a maximal length of 8 characters, in this case: \codeword{MONITOR}. The code section below shows how those utility functions are called at the beginning of the program execution.
+
+\bigskip
 \colorlet{mygray}{black!30}
 \colorlet{mygreen}{green!60!blue}
 \colorlet{mymauve}{red!60!blue}
@@ -174,21 +205,43 @@ The file system is an essential part of the device firmware. It enables accessin
                    showtabs=false,                 
                    stepnumber=5,                  
                    stringstyle=\color{mymauve},    
-                   tabsize=3,                      
+                   tabsize=2,                      
                    title=\lstname,
                    frame=none,
                    xleftmargin = 1cm,
                    framexleftmargin = 1em]
-utils_init("MONITOR");   // Initialize peripherals and file system
+utils_init("MONITOR");  // Initialize peripherals and file system
 utils_systemConfig("system.json");   // Load system configuration
-utils_startMsc();   // Start USB mass storage controller
+utils_startMsc();       // Start USB mass storage controller
 \end{lstlisting}
 
+In addition to the \acrshort{usb} \acrshort{msc} protocol, a \acrfull{cdc} has been set up. This creates a \acrfull{vcp} over which the host computer can gain debug information from the device. \newline
+After initializing the \acrshort{usb}-Interface and file system, the device configuration is loaded from the locally stored \acrshort{json}-File, more details in the following section \ref{System Configuration}.
 
+\subsection{System Configuration} \label{System Configuration}
+The system configuration is defined in a \acrshort{json}-File called \codeword{system.json}, stored in the root directory of the file system. This file gets read and parsed on every startup or reset. The following parameter can be adjusted:
 
-\subsubsection{System Configuration}
-Florian 
-\subsubsection{Frame Configuration}
+\begin{table}[h]
+    \begin{tabular}{ | p{2.5cm} | p{1.3cm}| p{5.9cm} | p{3.0cm} |}
+      \hline
+      \multicolumn{1}{|c|}{\textbf{Parameter Name}} & \multicolumn{1}{c|}{\textbf{Type}} & \multicolumn{1}{c|}{\textbf{Description}} & \multicolumn{1}{c|}{\textbf{Example}}\\ \hline
+      \codeword{ssid} & string & \acrshort{ssid} of \acrfull{ap} & \codeword{"fleet-monitor"} \\ \hline
+      \codeword{password} & string & Password of \acrshort{ap} * & \codeword{"secret"} \\ \hline
+      \codeword{connection} & string & Preferred connection type: \newline\codeword{[auto, lan, wlan]}  & \codeword{"auto"} \\ \hline
+      \codeword{config} & string & Location of config file: \newline\codeword{[local, remote]} & \codeword{"remote"} \\ \hline
+      \codeword{host_ip} & string & IP Address of host server & \codeword{"10.3.141.1"} \\ \hline
+      \codeword{host_port} & integer & Port of host server & \codeword{8080} \\ \hline
+      \codeword{overwrite_file} & boolean & Overwrite locally stored config file with remotely downloaded version & \codeword{True} \\ \hline
+      \codeword{bootloader} & boolean & Restart device in \acrshort{dfu} mode ** & \codeword{False} \\ \hline
+    \end{tabular}
+    \caption{\label{tab:System-Configuration}System Configuration Parameter Description}
+\end{table}
+
+* Password field gets cleared after config file has been loaded due to security reasons.
+** If set \codeword{True}, device reboots immediately in \acrshort{dfu} mode and field gets reset to \codeword{False}.
+\newpage
+
+\subsection{Frame Filter Configuration}
 Florian 
 
 \subsection{Networking}
@@ -202,10 +255,33 @@ Luca
 \subsection{Accelerometer}
 Luca
 
+
+\newpage
 \section{Utility Software Tools}
+Several software tools have been write in python... \todo{Add more blabla}
+
 \subsection{HTTP Server}
 Luca
 \subsection{FMS Configuration Tool}
 Flo
+
+\bigskip
+\begin{figure}[h!]
+	\centering
+	\includegraphics[height=12cm]{images/Configuration-Tool_Screenshot}
+	\caption{FMS Frame Configuration Tool}
+	\label{fig:configuration_tool}
+\end{figure}
+\newpage
+
 \subsection{FMS Data Visualizer}
-Flo
+Flo 
+
+\bigskip
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=15cm]{images/FMS_Data_Visualization.pdf}
+	\caption{Visualization of FMS Data}
+	\label{fig:fms_visualization}
+\end{figure}
+\newpage

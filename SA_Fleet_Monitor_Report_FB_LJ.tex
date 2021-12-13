@@ -85,6 +85,15 @@
 \usepackage[linkcolor=black,colorlinks=false,citecolor=black,filecolor=black]{hyperref}
 \usepackage[capitalize, noabbrev]{cleveref}
 
+%\usepackage[showframe]{geometry}% http://ctan.org/pkg/geometry
+%\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+%\usepackage{graphicx}% http://ctan.org/pkg/graphicx
+
+\NewDocumentCommand{\codeword}{v}{%
+\texttt{\textcolor{black}{#1}}%
+}
+\lstset{language=C,keywordstyle={\bfseries \color{blue}}}
+
 %% Important: Must be last import package, otherwise hyperlinks do not work?!
 \usepackage[acronym]{glossaries}
 
