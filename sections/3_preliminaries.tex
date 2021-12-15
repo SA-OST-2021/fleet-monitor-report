@@ -9,7 +9,7 @@
 
 \section{Controller Area Network (CAN)}
 \subsection{Basics}
-ISO11898 describes the physical data link layer implementation of \acrshort{can}. This specification describes a twisted-wire pair bus with 120$\Omega$ line impedance, and differential signaling at a rate up to 1 Mbit/s. A network is constructed with two or more transceivers on the same bus lines. The network must be terminated with a 120$\Omega$ resistor at each end of the bus, as shown in Figure \ref{fig:can-bus_topology}.
+ISO11898 describes the physical data link layer implementation of \acrshort{can}. This specification describes a twisted-wire pair bus with 120 $\Omega$ line impedance, and differential signaling at a rate up to 1 Mbit/s. A network is constructed with two or more transceivers on the same bus lines. The network must be terminated with a 120 $\Omega$ resistor at each end of the bus, as shown in Figure \ref{fig:can-bus_topology}.
 
 
 \begin{figure}[h!]
@@ -24,25 +24,45 @@ As long as the bus is free, any node is allowed to transmit \acrshort{can} messa
 
 Every node on the network reads the identifier of a message, and each node independently determines if the message is to be ignored or processed. Since the identifier is specific to the contents of the message rather than the identity of the originating node, new nodes may be added to the network, without modifying the program of any existing node on the network.
 
+\subsection{Signaling}
+
+The signals on the CAN bus are distinguishes between two bus logic states, dominant and recessive. A recessive bit is defined as CANH being less than CANL + 0.5 V. A dominant bit is defined as CANH being more than CANL + 0.9 V. Figure \ref{fig:can-signaling} illustrates the nominal case. Since dominant bits overwrite recessive bits, CAN manages message collision through the process of bit-wise arbitration as described earlier.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[height=3cm]{images/can-signaling}
+	\caption{\acrshort{can}-Bus Signaling}
+	\vspace{-1.4ex}
+	\label{fig:can-signaling}
+\end{figure}
+
 \subsection{Frames}
-Messages over a CAN Bus are refered to as frames. It compromises of the following parts.
+Messages over a \acrshort{can} bus are referred to as frames. The most common frame types are defined as \acrshort{can} 2.0A and 2.0B also known as base and extended frame. 2.0A is simply a \acrshort{can} frame with an 11-bit identifier and 2.0B always uses 29-bit. A \acrshort{can} frame is always split up into the following regions.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[height=2cm]{images/can-frame}
+	\caption{Base 11-bit identifier \acrshort{can} frame}
+	\vspace{-1.4ex}
+	\label{fig:can-frame}
+\end{figure}
 
 \begin{itemize}
-		\item The Arbitration Field, which includes the identifier of the message which also defines the priority of the message. The identifier can contain 11 or 29 bits. 
-		\item The data field which contains 0-8 bytes of information
-		\item The CRC field which contains a 15-bit checksum. The checksum is used to detect errors in the transmission.
+		\item The Arbitration Field, includes the identifier of the message and defines the priority. The identifier must be 11 or 29 bits long. Also in this field is the \acrfull{rtr} bit, which is used to request data.
+		\item The Control Field is used to differentiate between the two frame types and defines the incoming data length.
+		\item The data field can contain 0-8 bytes of information.
+		\item The \acrshort{crc} field contains a 15-bit checksum. The checksum is used to detect errors in the transmission.
 		\item The Acknowledgement Slot, is used to detect if a message was received by any of the devices on the bus. The transmitter checks for the presence of the Acknowledge bit and re-transmits the message if no acknowledge was detected.
-		
 \end{itemize}
 
-Two different frame formats exist, the standard 
 Source: https://www.ti.com/lit/an/slla109a/slla109a.pdf,
 https://www.kvaser.com/can-protocol-tutorial/
+\newpage
 
 \section{SAE J1939}
-J1939 is the open standard developed by \acrfull{sae}. It is used for networking and communication in the commercial vehicle sector. J1939 is a higher-layer protocol utilizing \acrshort{can} as its physical layer. SAE J1939 is primarily a data driven protocol, providing far better data bandwidth than other automation protocols such as CANopen and DeviceNet. 
+J1939 is the open standard developed by \acrfull{sae}. It is used for networking and communication in the commercial vehicle sector. J1939 is a higher-layer protocol utilizing \acrshort{can} as its physical layer. SAE J1939 is primarily a data driven protocol, providing far better data bandwidth than other automation protocols such as \gls{canopen} and \gls{devicenet}. 
 
-The standard specifies CAN bus speeds of 250 kbit/s or 500 kbit/s and uses the extended 29-bit identifier frame format. Most messages defined by the J1939 standard are intended to be broadcast. This means that the data is transmitted on the network without a specific destination. This permits any device to use the data without requiring additional request messages. The 29-bit identifier used in J1939 is structured in the following way.
+The standard specifies CAN bus speeds of 250 kbit/s or 500 kbit/s and uses the extended 29-bit identifier frame format. Most messages defined by the J1939 standard are intended to be broadcast only. This means that the data is transmitted on the network without a specific destination. This permits any device to use the data without requiring additional request messages. The 29-bit identifier used in J1939 is structured in the following way.
 
 \begin{figure}[h!]
 	\centering
@@ -54,20 +74,10 @@ The standard specifies CAN bus speeds of 250 kbit/s or 500 kbit/s and uses the e
 
 The first three bits of the identifier are used for controlling a message priority during the arbitration process. A value of 0 has the highest priority.
 
-The next bit of the identifier is reserved for future use and is set to 0 for transmitted messages.
+The Reserved bit, Data Page bit, PDU Format field and PDU specific field are often grouped together and referred as \acrfull{pgn}. 
 
-The next bit in the identifier is the data page selector. This bit expands the number of possible Parameter Groups that can be represented by the identifier.
+The last 8 bits of the identifier contain the address of the device transmitting the message. Two devices can not share the same address.
 
-The PDU format (PF) determines whether the message can be transmitted with a destination address or if the message is always transmitted as a broadcast message.
-
-The interpretation of the PDU specific (PS) field changes based on the PF value:
-
-If the PF is between 0 and 239, the message is addressable (PDU1) and the PS field contains the destination address.
-If the PF is between 240 and 255, the message can only be broadcast (PDU2) and the PS field contains a Group Extension.
-The Group extension expands the number of possible broadcast Parameter Groups that can be represented by the identifier.
-
-The term Parameter Group Number (PGN) is used to refer to the value of the Reserve bit, DP, PF, and PS fields combined into a single 18 bit value.
-\todo{this is just copied in for now, think about if we really need that}
 
 Source: https://copperhilltech.com/a-brief-introduction-to-the-sae-j1939-protocol/,
 https://www.kvaser.com/about-can/higher-layer-protocols/j1939-introduction/
@@ -78,11 +88,21 @@ The Fleet Management Systems Interface (FMS) is a standard interface developed b
 
 \begin{figure}[h!]
 	\centering
+	\hfuzz=14.0pt
 	\includegraphics[height=6.5cm]{images/fms-bus}
 	\caption{FMS Topology}
 	\vspace{-1.4ex}
 	\label{fig:fms-bus}
 \end{figure}
 
-As of writing the FMS Standard includes 44 different packages. Each frame has a fixed data length of 8 byte which makes decoding a lot easier.   
+As of writing the FMS Standard includes 36 different packages ranging from engine coolant temperature to door position. The update rate varies between 20ms and 10s. The convention defines the \acrfull{pgn} of the J1939 identifier. Both the source address and priority are OEM specific. Each frame has a fixed data length of 8 byte but not all of them contain information. Example of a FMS Frame:
+
+\begin{figure}[h!]
+	\centering
+	\hfuzz=11.0pt
+	\includegraphics[height=2.4cm]{images/fms-frame}
+	\caption{Fuel Consumption FMS Frame}
+	\vspace{-1.4ex}
+	\label{fig:fms-frame}
+\end{figure}
 
