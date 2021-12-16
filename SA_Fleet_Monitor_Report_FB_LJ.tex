@@ -93,6 +93,8 @@
 %\usepackage{lipsum}% http://ctan.org/pkg/lipsum
 %\usepackage{graphicx}% http://ctan.org/pkg/graphicx
 
+\usepackage{setspace}
+\usepackage{parskip}
 \usepackage{wrapfig}
 \usepackage{verbatimbox}
 \usepackage{bold-extra}
@@ -148,16 +150,13 @@
 \mainmatter
 \renewcommand{\thefigure}{\thechapter.\arabic{figure}}
 
-
 \input{sections/acro}
-
-%% acronyms used in this thesis:
-%\chapter*{Acronyms}
-\glsnogroupskiptrue
-%\glsaddall
-\printglossary[type=\acronymtype]
+{
+    \linespread{0.7}\selectfont{}
+    \glsnogroupskiptrue
+    \printglossary[type=\acronymtype]
+}
 \printglossary
-%\input{sections/acro}
 
 
 %% Your real content!

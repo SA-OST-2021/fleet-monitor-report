@@ -416,55 +416,72 @@ Reading out frames from the CAN bus, filtering them and finally transmitting the
 	\caption{FreeRTOS Tasks and Queue for FMS Frames}
 	\label{fig:fms-software}
 \end{figure}
-\subsubsection{FMS Format Class}
 
 \subsubsection{FMS Filter}
 Both tasks will only start running once a configuration was read from either the server or from the local file system. The configuration is explained in the Section \ref{Frame Filter Configuration}.
 
-Generally a frame can be enabled and disabled for the transmission, this helps remove unwanted packages from taking up valuable bandwidth. Additionally three filter methods were implemented to reduce the data rate and repetition of information:
+Generally a frame can be enabled and disabled for the transmission, this helps remove unwanted packages from taking up valuable bandwidth. Additionally three filter methods were implemented to reduce the data rate and repetition of useless information:
 \begin{itemize}
-		\item On Change, data is only transmitted when something inside the data field of the frame changed. This is very useful for state supervision for example error codes, door states. 
+		\item On Change, data is only transmitted when something inside the data field of the frame changed. This is very useful for state supervision of error codes or door states. 
 		\item Interval, data is only transmitted with a set interval. Data in between the set interval is discarded. This filter method is used for things that are not very important but still good to know from time to time.
 		\item No Filter, all the data received is being transmitted. This method is used for things that are very important to monitor.
 \end{itemize}
 
+Data inside the queue is always sent out to the server. Therefore the filtering is done inside the CAN-Read task and only adds data to the queue when it passes all the filters.  
+
 \subsubsection{JSON Format}
-A buffer is allocated to hold the FMS data from the queue, the data is parsed into JSON format
+In order to hold the FMS data from the queue, a JSON buffer is allocated. The timestamp is added to each frame, and then all the other fields are added to the JSON array. You can enable and disable the name in the configuration file. Adding the name simplifies parsing, but increases the data rate since it is added to every frame.
 
 \begin{table}[h!]
     \begin{center}
     \framebox{
-        \begin{tabular}{p{0.0cm} p{0.1cm} p{0.1cm} p{0.1cm} p{12.0cm}}                                     \\[-0.5em]
-        & \multicolumn{3}{l}{$\triangledown$ \texttt{frames [n]}}                                        \\[0.3em]
-        & & \multicolumn{2}{l}{$\triangledown$ \texttt{0 \{4\}}}                                          \\[0.3em]
-        & & & \scalebox{0.8}{$\square$} \texttt{pgn:\;\ \quad\textbf{FEE9}}                               \\[0.3em]
-        & & & \scalebox{0.8}{$\square$} \texttt{name:\;\quad\textbf{Fuel Consumption: LFC}}               \\[0.3em]
-        & & \multicolumn{2}{l}{$\triangledown$ \texttt{1 \{4\}}}                                          \\[0.3em]
-        & & & \scalebox{0.8}{$\square$} \texttt{pgn:\;\ \quad\textbf{FE6C}}                               \\[0.3em]
-        & & & \scalebox{0.8}{$\square$} \texttt{name:\;\quad\textbf{Tachograph: TCO1}}                    \\[0.3em]
+        \begin{tabular}{p{0.0cm} p{0.1cm} p{0.1cm} p{0.1cm} p{7.0cm}}                                       \\[-0.5em]
+        & \multicolumn{4}{l}{$\triangledown$ \texttt{JSON \{1\}}}                                           \\[0.3em]
+        & & \multicolumn{3}{l}{$\triangledown$ \texttt{frames [n]}}                                         \\[0.3em]
+        & & & \multicolumn{2}{l}{$\triangledown$ \texttt{0 \{4\}}}                                          \\[0.3em]
+        & & & & \scalebox{0.8}{$\square$} \texttt{ts:\;\ \ \textbf{1618892400.690}}                         \\[0.3em]
+        & & & & \scalebox{0.8}{$\square$} \texttt{pgn:\;\ \textbf{FEE9}}                                    \\[0.3em]
+        & & & & \scalebox{0.8}{$\square$} \texttt{data:\;\textbf{FFFFFFFF000236A4}}                         \\[0.3em]
+        & & & & \scalebox{0.8}{$\square$} \texttt{name:\;\textbf{Fuel Consumption: LFC}}                    \\[0.3em]
+        & & & \multicolumn{2}{l}{$\triangledown$ \texttt{1 \{4\}}}                                          \\[0.3em]
+        & & & & \scalebox{0.8}{$\square$} \texttt{ts:\;\ \ \textbf{1618892400.880}}                         \\[0.3em]
+        & & & & \scalebox{0.8}{$\square$} \texttt{pgn:\;\ \textbf{FE6C}}                                    \\[0.3em]
+        & & & & \scalebox{0.8}{$\square$} \texttt{data:\;\textbf{ACF1E302FFFF00F7}}                         \\[0.3em]
+        & & & & \scalebox{0.8}{$\square$} \texttt{name:\;\textbf{Tachograph: TCO1}}                         \\[0.3em]
+        & & & \multicolumn{2}{l}{$\triangleright$ \texttt{2 \{4\}}}                                         \\[0.3em]
+        & & & \multicolumn{2}{l}{$\triangleright$ \texttt{3 \{4\}}}                                         \\[0.3em]
+        & & & \multicolumn{2}{l}{...}                                                                       \\[0.3em]
+        & & & \multicolumn{2}{l}{$\rhd$ \texttt{n \{4\}}}                                                   \\[0.4em]
         \end{tabular}
     }
     \end{center}
-%\vspace{-0.3cm}
-\caption{\label{fig:frame-configuration-example}Frame Filter Configuration Example}
+\caption{\label{fig:example-fms-data}Example FMS Data for Transmission}
 \end{table}
-\newpage
+
+The JSON buffer can hold a maximum of 8 KB. Single frames are added to the buffer until it can not hold any more information. At that point it is ready for the transmission.  
 
 \subsubsection{Transmission}
-As already explained above in the Section \ref{Networking} data is being transmitted over the connected interface. If a request to the server times out or no confirmation is received, the JSON buffer is discarded. This is due to the amount of data gathered from the bus. The transmission body data length varies but is generally around 8000 bytes long.
+Data is communicated over the currently active interface, as previously explained in Section \ref{Networking}. The JSON buffer is serialized into a single string before being sent to the server as part of an HTTP POST request. In normal operation, the server confirms the request with a status code of 200. The JSON buffer is discarded if a request to the server times out or if no confirmation is returned. This is due to the large amount of data collected by the bus. The length of the transmission body varies, however it is usually around 8000 bytes. The period between POST requests is significantly depending on the filter technique, but without any filters, a transmission occurs every second or so.
 
-\todo[inline]{Write about different filter settings as I mentioned it in section \ref{Frame Filter Configuration}}
+\newpage
 
 \subsection{Accelerometer}
-Luca
+The acceleration is read out from its own task with an update rate of 50 Hz. Since this data is not needed for anything at the moment we just read it out and leave the specific implementation open for future use cases.
 
+On boot up over a period of 5 seconds, the accelerometer is calibrated to eliminate the offset on each axis and get rid of the gravity vector. The purpose of this is to make it easy to record high acceleration events. When the linear acceleration reaches a predefined threshold, the data can be transmitted to the server.
 
 \newpage
 \section{Utility Software Tools}
-Several software tools have been write in python... \todo{Add more blabla}
+Several software tools have been developed to support the hardware in its operation. These utilities were all written in the Python programming language. \todo{Add more stuff}
 
 \subsection{HTTP Server}
-Luca
+The HTTP server was developed to communicate with the Fleet-Monitor. It was written with the help of an AI system that translates natural language to code called OpenAI Codex. It helped us to reduce the development time and produced good results for our application. The HTTP Server is a command line application that does not have a graphical user interface. Both HTTP GET and HTTP POST requests can be handled by the server. Each request to the server creates a new thread that will handle the response.
+
+HTTP GET requests are used to access files stored locally. Filenames are included in the URL of the HTTP GET request. Using this method, multiple files may be served. If the requested file is located in the server's directory, the server responds with status code 200 and serves it. Otherwise, an empty page is returned with a status code of 404.
+
+Streaming data from the Fleet-Monitor to the server is extremely important for our application. This is accomplished using HTTP POST requests. The server expects a JSON string of FMS data inside the body of the request. The server responds with a status code 200 if the data is found and no errors are detected. Moreover, the server will include the current time and date in the response, along with information if a file has changed in its directory.
+
+\todo[inline]{Maybe add some graphics here?}
 
 \newpage
 \subsection{FMS Configuration Tool}
@@ -491,7 +508,8 @@ The configuration tool is decided into \textit{Global Settings} and \textit{Fram
 \newpage
 
 \subsubsection{PyQt5}
-As a framework
+As a framework Qt Version 5 for Python, in short PyQt5 has been used. This very comprehensive software package enables rapid development of \acrshort{gui}s. One of several major advantages is the platform compatibility. Therefore the created tools run on different operating systems without the need of any changes to the code. The python interpreter executed the code in a closed environment and does not depend on additional libraries or packages except the PyQt5 framework. \\
+The dynamic scaling of the window including all of its features is essential as modern applications must be able to run on multiple screens with different resolutions.
 
 \subsubsection{File Loading \& Saving}
 \begin{wrapfigure}{r}{4.0cm}
@@ -500,12 +518,15 @@ As a framework
 \caption{File Menu-Bar}
 \end{wrapfigure} 
 To open an existing configuration file, three methods are available. Firstly via the menu-bar section, by clicking on the \textit{Open} button. Secondly by entering the keyboard shortcut \textit{Ctrl+O} and thirdly by dragging a file into the application. Saving files is very similar and intuitive due to the use of common shortcuts.
-\newpage
-
-
+%\newpage
 
 \subsection{FMS Data Visualizer}
-Flo 
+As the host server receives the incoming data in raw HEX format, post processing is needed to gain access to the contained information. To demonstrate this procedure, a Python script has been developed to parse and visualize \acrshort{fms}-Data. 
+
+\subsubsection{FMS Frame Parsing}
+
+\newpage
+\subsubsection{Pyplot Library}
 
 \bigskip
 \begin{figure}[h!]
