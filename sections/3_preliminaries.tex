@@ -55,12 +55,11 @@ The standard specifies CAN bus speeds of 250\,kbit/s or 500\,kbit/s and uses the
 	\caption{29-bit J1939 Identifier}
 	\label{fig:29-bit_J1939_Identifier}
 \end{figure}
-
-The first three bits of the identifier are used for controlling a message priority during the arbitration process. A value of 0 has the highest priority.
-
-The Reserved bit, Data Page bit, PDU Format field and PDU specific field are often grouped together and referred as \acrfull{pgn}. 
-
-The last 8 bits of the identifier contain the address of the device transmitting the message. Two devices can not share the same address.
+\begin{itemize}
+	\item The first three bits of the identifier are used for controlling a message priority during the arbitration process. A value of 0 has the highest priority.
+	\item The Reserved bit, Data Page bit, PDU Format field and PDU specific field are often grouped together and referred as \acrfull{pgn}. 
+	\item The last 8 bits of the identifier contain the address of the device transmitting the message. Two devices can not share the same address.
+\end{itemize}
 \newpage
 
 \section{Fleet Management System (FMS)}
@@ -83,4 +82,6 @@ At the time of writing, the standard includes 36 different packages, ranging fro
 	\caption{Fuel Consumption FMS Frame}
 	\label{fig:fms-frame}
 \end{figure}
+
+\todo{Add the fms document as reference}
 

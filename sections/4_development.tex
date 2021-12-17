@@ -2,7 +2,7 @@
 
 %% Section Hardware Design %%
 \section{Hardware Design}
-The hardware of the Fleet-Monitor was design using Altium Designer 21. The integrated 3D \acrshort{cad} functionality simplified the overall development and lowered the chance of errors in the design. The 4-Layer \acrfull{pcb} with the size of 140.5 mm x 79.5 mm has been manufactured and assembled by JLCPCB.\newline
+The hardware of the Fleet-Monitor was design using Altium Designer 21. The integrated 3D \acrshort{cad} functionality simplified the overall development and lowered the chance of errors in the design. The 4-Layer \acrfull{pcb} with the size of 140.5\,mm\,x\,79.5\,mm has been manufactured and assembled by JLCPCB.\newline
 As a proof of concept, five prototypes have been made, which are all fully tested and in working condition.
 
 \begin{figure}[h!]
@@ -16,10 +16,10 @@ As a proof of concept, five prototypes have been made, which are all fully teste
 
 \subsection{Power Management}
 The device can be powered ether by the \acrshort{usb}-Interface or an external DC power source. Both supply options are internally connected through Schottky diodes and provide a seamless switch-over. If both supply sources provide power at the same time, the external one gets preferred.\newline
-The \acrfull{usb} Interface fulfills all guidelines of the \acrshort{usb} specifications in terms of power consumption. Therefor it is guaranteed, that the maximal current of 500 mA is not exceeded. In case of failure, a resettable \acrshort{ptc} Poly-fuse protects the power source of potential over current.\newline
-The external power source accepts a voltage range from 9 V to 28 V and is protected against wrong polarization and short circuit. As a suitable connector, the industry standard M12 (5 Pin) type has been chosen. It fulfils the IP67 rating and is highly robust against accidental disconnection due to its threaded coupling. In addition it is used in a wide variety of applications, resulting in great availability. The pin-out consists of pin 1 and 2 used for the positive input and pins 3 to 5 for ground. This has the advantage, that matching connectors with a different amount of pins (e.g. 2-pin connector) can be used as well.\newline
+The \acrfull{usb} Interface fulfills all guidelines of the \acrshort{usb} specifications in terms of power consumption. Therefor it is guaranteed, that the maximal current of 500\,mA is not exceeded. In case of failure, a resettable \acrshort{ptc} Poly-fuse protects the power source of potential over current.\newline
+The external power source accepts a voltage range from 9\,V to 28\,V and is protected against wrong polarization and short circuit. As a suitable connector, the industry standard M12\,(5\,Pin) type has been chosen. It fulfils the IP67 rating and is highly robust against accidental disconnection due to its threaded coupling. In addition it is used in a wide variety of applications, resulting in great availability. The pin-out consists of pin 1 and 2 used for the positive input and pins 3 to 5 for ground. This has the advantage, that matching connectors with a different amount of pins (e.g. 2-pin connector) can be used as well.\newline
 The core of the power management unit is based on a Recom DC-DC converter of the RPMB-2.0 series. The very compact design, great performance and fairly low price offers an optimal solution.\newline
-The total power consumption of the device is in average around 1.5 W.
+The total power consumption of the device is in average around 1.5\,W.
 
 \bigskip
 \begin{figure}[h!]
@@ -70,10 +70,10 @@ In order to connect the device to a host server, an Ethernet interface was added
 \end{figure}
 
 \subsubsection{Controller}
-The Ethernet interface utilizes a WIZNet W5500 Ethernet controller chip with an integrated \acrshort{phy} and \acrshort{tcp/ip} stack. It is capable of transmission speeds of 10 or 100 MBit/s. The chip is connected through \acrshort{spi} with the main processing unit (\gls{esp32}).
+The Ethernet interface utilizes a WIZNet W5500 Ethernet controller chip with an integrated \acrshort{phy} and \acrshort{tcp/ip} stack. It is capable of transmission speeds of 10 or 100\,MBit/s. The chip is connected through \acrshort{spi} with the main processing unit (\gls{esp32}).
 
 \subsubsection{Isolation}
-The IEEE standard 802.3 specifies a 1500 V\textsubscript{RMS} isolation barrier between the Ethernet PHY Chip and the cable. To comply with these requirements a pulse transformer was used to magnetically couple the data lines between the connector and the chip. Additionally a ground clearance of 3 mm was chosen to avoid arc-over or tracking between electrical conductors as seen in Figure \ref{fig:eth-pcb}. 
+The IEEE standard 802.3 specifies a 1500\,V\textsubscript{RMS} isolation barrier between the Ethernet PHY Chip and the cable. To comply with these requirements a pulse transformer was used to magnetically couple the data lines between the connector and the chip. Additionally a ground clearance of 3\,mm was chosen to avoid arc-over or tracking between electrical conductors as seen in Figure \ref{fig:eth-pcb}. 
 
 \begin{figure}[h!]
 	\centering
@@ -125,19 +125,19 @@ A dual-channel digital isolator (ISO7221BDR) was used in conjunction with an iso
 A common mode choke as well as bypass capacitors were added to the differential signal lines. A common mode choke is an electrical filter that blocks high frequency noise common to two or more data or power lines while allowing the desired DC or low-frequency signal to pass. Common mode (CM) noise is typically radiated from sources such as radio signals, unshielded electronics, inverters and motors. Additionally matching capacitors on the CANH and CANL lines were added to enhance the immunity against electromagnetic interference. 
 
 \subsubsection{Connector}
-The FMS Standard specifies a DIN 72585 connector as the default physical interface. Since these connectors are only available for panel mount, an additional wire to board connector was selected. A Molex Micro-Fit 3.0 was chosen because its widely available and being used in lots of applications.
+The FMS Standard specifies a DIN 72585 connector as the default physical interface. Since these connectors are only available for panel mount, an additional wire to board connector was selected. A Molex Micro-Fit\,3.0 was chosen because its widely available and being used in lots of applications.
 
 \subsubsection{Termination}
-In addition the FMS Standard specifies a 120$\Omega$ CAN termination resistor to be added on the monitor side. To fulfill this requirement and to make it compatible with system that do not need that resistor, a jumper was added to enable/disable the termination.   
+In addition the FMS Standard specifies a 120\,$\Omega$ CAN termination resistor to be added on the monitor side. To fulfill this requirement and to make it compatible with system that do not need that resistor, a jumper was added to enable/disable the termination.   
 
 \subsection{Accelerometer}
-By request of the industry partner an accelerometer was added to gather additional data. The LIS2DH12 is an ultra-low-power high-performance three-axis linear accelerometer with digital I2C/SPI serial interface output. The sensor has user-selectable scales of ±2g up to ±16g and is capable of measuring accelerations with data rates from 1 Hz to 5.3 kHz. The sensor is connected through SPI to the ESP32.
+By request of the industry partner an accelerometer was added to gather additional data. The LIS2DH12 is an ultra-low-power high-performance three-axis linear accelerometer with digital I2C/SPI serial interface output. The sensor has user-selectable scales of ±2g up to ±16g and is capable of measuring accelerations with data rates from 1\,Hz to 5.3\,kHz. The sensor is connected through SPI to the ESP32.
 
 \newpage
 \section{Mechanical Design}
 The automotive environment is known for its harsh conditions, such as vibrations, large temperature range and high humidity. The device must withstand those factors and should guarantee a long lifespan. The optimal selection of components, especially the connectors was key to satisfy the requirements and reach an IP67 rating.\newline
 As a suitable case for the device, a poly-carbonate watertight enclosure with transparent lid has been chosen. The very robust construction creates an ideal protection for all electronic components.\newline
-The case has been machined in the internal workshop of the university. The corresponding mechanical drawings have been made with SolidWorks 2020 and are attached in the appendix: \ref{Fleet-Monitor V1.0 Mechanical Drawing}
+The case has been machined in the internal workshop of the university. The corresponding mechanical drawings have been made with SolidWorks\,2020 and are attached in the appendix: \ref{Fleet-Monitor V1.0 Mechanical Drawing}
 
 \medskip
 \begin{figure}[h!]
@@ -156,7 +156,7 @@ The Arduino framework offers extensive library support, especially for the \acrs
 
 \subsection{File system}
 The file system is an essential part of the device firmware. It enables accessing files stored on the internal \acrshort{spi}-Flash chip as well as creating an interface for additional libraries.
-The flash chip has a memory capacity of 4 MB and is partitioned into four different sections. The size of each partition can be configured in the \textit{partitions\_custom.csv} file. Basically the memory is split into two partitions with ruffly the same size ($\approx$ 2 KB each) as a reasonable compromise between program memory and file system storage.
+The flash chip has a memory capacity of 4 MB and is partitioned into four different sections. The size of each partition can be configured in the \textit{partitions\_custom.csv} file. Basically the memory is split into two partitions with ruffly the same size ($\approx$ 2\,KB each) as a reasonable compromise between program memory and file system storage.
 
 \begin{table}[h]
     \begin{tabular}{ | m{3.15cm} | m{3.15cm}| m{3.15cm} | m{3.15cm} |} 
@@ -371,7 +371,7 @@ The Fleet-Monitor needs to communicate with a server to stream data, exchange th
 \subsubsection{Connection}
 The device can connect through WIFI or Ethernet with the host. Both interfaces utilize UDP to negotiate an IP address and the server IP can be configured through the system configuration. The device can be connected to both interfaces at the same time but only one is used to communicate with the server. 
 
-The connection is checked every 5 seconds and works as follows. First the hardware status is checked, then the connection to a host and lastly if we received an IP address. The Ethernet interface is the prioritized communication method. It provides better data throughput and is less prone to errors than the over the air alternative. For example, if both interfaces received an IP address and are able to communicate with the server, Ethernet is used for the transmission. This is illustrated in Figure \ref{fig:connectin-tree} bellow.
+The connection is checked every 5\,seconds and works as follows. First the hardware status is checked, then the connection to a host and lastly if we received an IP address. The Ethernet interface is the prioritized communication method. It provides better data throughput and is less prone to errors than the over the air alternative. For example, if both interfaces received an IP address and are able to communicate with the server, Ethernet is used for the transmission. This is illustrated in Figure \ref{fig:connectin-tree} bellow.
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[height=14.5cm]{images/connection-tree}
@@ -384,7 +384,7 @@ The connection is checked every 5 seconds and works as follows. First the hardwa
 \acrfull{http} is used to communicate with the server and allows the Fleet-Monitor to read files and stream data. We decided to go with this technology because it is well supported by all libraries used. Data is transferred using HTTP POST requests containing data inside the body. The server response is used to check if the data was received correctly and validate the server connection. HTTP GET methods are used to read files from the server.
 
 \subsubsection{Time synchronization}
-In order for data to be useful it needs to have a timestamp. Ideally this timestamp would translate to a real time and date. This is why we implemented on both the server and client side a mechanism to synchronize the two. Every POST response from the server includes a JSON string with a field called Date. This field represents the current date and time and is used by the Fleet-Monitor to set its real time clock. Since the ESP32-S2 WROOM module does not have a dedicated oscillator for time keeping, the default 40 MHz crystal is used. The oscillator has a tolerance of ±10 \acrshort{ppm}. The maximum 24 hour drift can be calculated using the Equation \ref{eq:time}.
+In order for data to be useful it needs to have a timestamp. Ideally this timestamp would translate to a real time and date. This is why we implemented on both the server and client side a mechanism to synchronize the two. Every POST response from the server includes a JSON string with a field called Date. This field represents the current date and time and is used by the Fleet-Monitor to set its real time clock. Since the ESP32-S2 WROOM module does not have a dedicated oscillator for time keeping, the default 40 MHz crystal is used. The oscillator has a tolerance of ±10 \acrshort{ppm}. The maximum 24\,hour drift can be calculated using the Equation \ref{eq:time}.
 \medskip
 \begin{equation}
 \delta_{rel} =  \frac{1 s}{f} * \frac{f * \mathit{p}}{10^6} * t = \frac{1s}{40 MHz} * \frac{40 MHz * \pm10}{10^6} * 86400 s =  \pm0.864 s  
@@ -399,7 +399,7 @@ where:
  t     &  time in s \\
 \end{conditions}
 
-Since this drift is quite large, we decided to update the real time clock of the ESP32 every 24 h to make sure both the server and the Fleet-Monitor always share the same time.
+Since this drift is quite large, we decided to update the real time clock of the ESP32 every 24\,h to make sure both the server and the Fleet-Monitor always share the same time.
 
 The timestamp is read out as $YYYY,MM,DD,hh,mm,ss$ and is stored locally in the \gls{unix} time format. 
 
@@ -439,12 +439,12 @@ In order to hold the FMS data from the queue, a JSON buffer is allocated. The ti
         & \multicolumn{4}{l}{$\triangledown$ \texttt{JSON \{1\}}}                                           \\[0.3em]
         & & \multicolumn{3}{l}{$\triangledown$ \texttt{frames [n]}}                                         \\[0.3em]
         & & & \multicolumn{2}{l}{$\triangledown$ \texttt{0 \{4\}}}                                          \\[0.3em]
-        & & & & \scalebox{0.8}{$\square$} \texttt{ts:\;\ \ \textbf{1618892400.690}}                         \\[0.3em]
+        & & & & \scalebox{0.8}{$\square$} \texttt{ts:\;\ \ \textbf{1618892400.420}}                         \\[0.3em]
         & & & & \scalebox{0.8}{$\square$} \texttt{pgn:\;\ \textbf{FEE9}}                                    \\[0.3em]
         & & & & \scalebox{0.8}{$\square$} \texttt{data:\;\textbf{FFFFFFFF000236A4}}                         \\[0.3em]
         & & & & \scalebox{0.8}{$\square$} \texttt{name:\;\textbf{Fuel Consumption: LFC}}                    \\[0.3em]
         & & & \multicolumn{2}{l}{$\triangledown$ \texttt{1 \{4\}}}                                          \\[0.3em]
-        & & & & \scalebox{0.8}{$\square$} \texttt{ts:\;\ \ \textbf{1618892400.880}}                         \\[0.3em]
+        & & & & \scalebox{0.8}{$\square$} \texttt{ts:\;\ \ \textbf{1618892400.690}}                         \\[0.3em]
         & & & & \scalebox{0.8}{$\square$} \texttt{pgn:\;\ \textbf{FE6C}}                                    \\[0.3em]
         & & & & \scalebox{0.8}{$\square$} \texttt{data:\;\textbf{ACF1E302FFFF00F7}}                         \\[0.3em]
         & & & & \scalebox{0.8}{$\square$} \texttt{name:\;\textbf{Tachograph: TCO1}}                         \\[0.3em]
@@ -458,17 +458,18 @@ In order to hold the FMS data from the queue, a JSON buffer is allocated. The ti
 \caption{\label{fig:example-fms-data}Example FMS Data for Transmission}
 \end{table}
 
-The JSON buffer can hold a maximum of 8 KB. Single frames are added to the buffer until it can not hold any more information. At that point it is ready for the transmission.  
+The JSON buffer can hold a maximum of 8\,KB. Single frames are added to the buffer until it can not hold any more information. At that point it is ready for the transmission.  
 
 \subsubsection{Transmission}
-Data is communicated over the currently active interface, as previously explained in Section \ref{Networking}. The JSON buffer is serialized into a single string before being sent to the server as part of an HTTP POST request. In normal operation, the server confirms the request with a status code of 200. The JSON buffer is discarded if a request to the server times out or if no confirmation is returned. This is due to the large amount of data collected by the bus. The length of the transmission body varies, however it is usually around 8000 bytes. The period between POST requests is significantly depending on the filter technique, but without any filters, a transmission occurs every second or so.
+Data is communicated over the currently active interface, as previously explained in Section \ref{Networking}. The JSON buffer is serialized into a single string before being sent to the server as part of an HTTP POST request. In normal operation, the server confirms the request with a status code of 200. The JSON buffer is discarded if a request to the server times out or if no confirmation is returned. This is due to the large amount of data collected by the bus. The length of the transmission body varies, however it is usually around 8000\,bytes. The period between POST requests is significantly depending on the filter technique, but without any filters, a transmission occurs every second or so.
 
 \newpage
 
 \subsection{Accelerometer}
-The acceleration is read out from its own task with an update rate of 50 Hz. Since this data is not needed for anything at the moment we just read it out and leave the specific implementation open for future use cases.
+The acceleration is read out from its own task with an update rate of 50\,Hz. Since this data is not needed for anything at the moment we just read it out and leave the specific implementation open for future use cases.
 
-On boot up over a period of 5 seconds, the accelerometer is calibrated to eliminate the offset on each axis and get rid of the gravity vector. The purpose of this is to make it easy to record high acceleration events. When the linear acceleration reaches a predefined threshold, the data can be transmitted to the server.
+On boot up over a period of 5\,seconds, the accelerometer is calibrated to eliminate the offset on each axis and get rid of the gravity vector. The purpose of this is to make it easy to record high acceleration events. When the linear acceleration reaches a predefined threshold, the data can be transmitted to the server.
+\todo{Add 3D Render with Axis}
 
 \newpage
 \section{Utility Software Tools}
@@ -477,11 +478,11 @@ Several software tools have been developed to support the hardware in its operat
 \subsection{HTTP Server}
 The HTTP server was developed to communicate with the Fleet-Monitor. It was written with the help of an AI system that translates natural language to code called OpenAI Codex. It helped us to reduce the development time and produced good results for our application. The HTTP Server is a command line application that does not have a graphical user interface. Both HTTP GET and HTTP POST requests can be handled by the server. Each request to the server creates a new thread that will handle the response.
 
-HTTP GET requests are used to access files stored locally. Filenames are included in the URL of the HTTP GET request. Using this method, multiple files may be served. If the requested file is located in the server's directory, the server responds with status code 200 and serves it. Otherwise, an empty page is returned with a status code of 404.
+HTTP GET requests are used to access files stored locally. Filenames are included in the URL of the HTTP GET request. Using this method, multiple files may be served but we only use it for the configuration file. If the requested file is located in the server's directory, the server responds with status code 200 and serves it. Otherwise, an empty page is returned with a status code of 404.
 
-Streaming data from the Fleet-Monitor to the server is extremely important for our application. This is accomplished using HTTP POST requests. The server expects a JSON string of FMS data inside the body of the request. The server responds with a status code 200 if the data is found and no errors are detected. Moreover, the server will include the current time and date in the response, along with information if a file has changed in its directory.
-
-\todo[inline]{Maybe add some graphics here?}
+Streaming data from the Fleet-Monitor to the server is extremely important for our application. To accomplish this we are using HTTP POST requests. The server expects a JSON string of FMS data inside the body of the request, if the data is found and no errors are detected it will respond with a status code 200. Moreover, the server will include the current time and date in the response, along with information if a file has changed in its directory. The JSON string from the request is split and then stored locally in a CSV file. By using the FMS Data Visualizer, the data can then be interpreted.
+\todo[inline]{Maybe add some graphics here?  Was füres bild? ... Villicht es snippet wie d date im .csv abgspicheret worde si?}
+\todo[inline]{Write about Raspberry Pi}
 
 \newpage
 \subsection{FMS Configuration Tool}
@@ -524,6 +525,7 @@ To open an existing configuration file, three methods are available. Firstly via
 As the host server receives the incoming data in raw HEX format, post processing is needed to gain access to the contained information. To demonstrate this procedure, a Python script has been developed to parse and visualize \acrshort{fms}-Data. 
 
 \subsubsection{FMS Frame Parsing}
+The \acrshort{fms}-Standard describes in detail how each frame type is packed with data. In the scope of this project, the focus has been set to the most common frame types.
 
 \newpage
 \subsubsection{Pyplot Library}
