@@ -30,7 +30,7 @@ Messages over a \acrshort{can} bus are referred to as frames. The most common fr
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[height=2cm]{images/can-frame}
+	\includegraphics[width=\textwidth]{images/can-frame}
 	\caption{Base 11-bit identifier \acrshort{can} frame}
 	\label{fig:can-frame}
 \end{figure}
@@ -45,13 +45,13 @@ Messages over a \acrshort{can} bus are referred to as frames. The most common fr
 \newpage
 
 \section{SAE J1939}
-J1939 is the open standard developed by \acrfull{sae}. It is used for networking and communication in the commercial vehicle sector. J1939 is a higher-layer protocol utilizing \acrshort{can} as its physical layer. SAE J1939 is primarily a data driven protocol, providing far better data bandwidth than other automation protocols such as \gls{canopen} and \gls{devicenet} \cite{introduction_sae_j1939_protocol}.
+J1939 is the open standard developed by \acrfull{sae}. It is used for networking and communication in the commercial vehicle sector. J1939 is a higher-layer protocol utilizing \acrshort{can} as its physical layer. SAE\,J1939 is primarily a data driven protocol, providing far better data bandwidth than other automation protocols such as \gls{canopen} and \gls{devicenet} \cite{introduction_sae_j1939_protocol}.
 
 The standard specifies CAN bus speeds of 250\,kbit/s or 500\,kbit/s and uses the extended 29-bit identifier frame format. Most messages defined by the J1939 standard are intended to be broadcast only. This means that the data is transmitted on the network without a specific destination. This permits any device to use the data without requiring additional request messages. The 29-bit identifier used in J1939 is structured in the following way \cite{sae_j1939_introduction}. 
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[height=1.5cm]{images/j1939-identifier}
+	\includegraphics[width=\textwidth]{images/j1939-identifier}
 	\caption{29-bit J1939 Identifier}
 	\label{fig:29-bit_J1939_Identifier}
 \end{figure}
@@ -62,26 +62,24 @@ The standard specifies CAN bus speeds of 250\,kbit/s or 500\,kbit/s and uses the
 \end{itemize}
 \newpage
 
-\section{Fleet Management System (FMS)}
-The Fleet Management Systems Interface (FMS) is a standard interface developed by European commercial vehicle manufacturers in 2002. It defines a common interface for telematics applications and include driving as well as diagnostics information. The data is coded according to the SAE J1939 standard. FMS is a broadcast only system, a gateway between the internal bus and the FMS bus is implemented by the OEM. 3rd party systems, like the Fleet-Monitor, are forbidden on the internal bus as shown in figure \ref{fig:fms-bus}. 
+\section{Fleet Management System (FMS)} \label{Fleet Management System (FMS)}
+The Fleet Management Systems Interface (FMS) is a standard interface developed by European commercial vehicle manufacturers in 2002. It defines a common interface for telematics applications and include driving as well as diagnostics information. The data is coded according to the SAE\,J1939 standard. FMS is a broadcast only system, a gateway between the internal bus and the FMS bus is implemented by the OEM. 3rd party systems, like the Fleet-Monitor, are forbidden on the internal bus as shown in figure \ref{fig:fms-bus}. 
 
 \begin{figure}[h!]
 	\centering
 	\hfuzz=14.0pt
-	\includegraphics[height=6.5cm]{images/fms-bus}
+	\includegraphics[width=\textwidth]{images/fms-bus}
 	\caption{FMS Topology}
 	\label{fig:fms-bus}
 \end{figure}
 
-At the time of writing, the standard includes 36 different packages, ranging from engine coolant temperature to door position.  Depending on the frame, updates occur between 20ms and 10s. The convention set the \acrfull{pgn} for J1939 identifiers, while the OEM specify the source address and priority. Each frame has a fixed data length of 8 byte but not all of them contain information. Example of a FMS Frame:
+At the time of writing, the standard includes 36 different packages, ranging from engine coolant temperature to door position.  Depending on the frame, updates occur between 20\,ms and 10\,s. The convention set the \acrfull{pgn} for J1939 identifiers, while the OEM specify the source address and priority. Each frame has a fixed data length of 8\,byte but not all of them contain information as shown in the example frame bellow.\cite{fms-standard-description}:
 
 \begin{figure}[h!]
 	\centering
 	\hfuzz=11.0pt
-	\includegraphics[height=2.4cm]{images/fms-frame}
+	\includegraphics[width=\textwidth]{images/fms-frame}
 	\caption{Fuel Consumption FMS Frame}
 	\label{fig:fms-frame}
 \end{figure}
-
-\todo{Add the fms document as reference}
 
