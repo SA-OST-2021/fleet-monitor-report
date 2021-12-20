@@ -120,7 +120,7 @@ The blue \acrshort{led} will breath while the device is trying to establish a ne
 \newpage
 
 \subsubsection{Unable to establish server connection}\label{Unable to establish server connection}
-If the status status is not cleared after a short while, the Fleet-Monitor is unable to establish a connection to the server. The device is connected to an \acrshort{ap}, received an \acrshort{ip} address but the \acrshort{http} POST requests are unanswered or a bad status is returned. The following things should be checked to resolve this issue.
+If the status \acrshort{led} is not cleared after a short while, the Fleet-Monitor is unable to establish a connection to the server. The device is connected to an \acrshort{ap}, received an \acrshort{ip} address but the \acrshort{http} POST requests are unanswered or a bad status is returned. The following things should be checked to resolve this issue.
 
 \begin{enumerate}
   \item Make sure the \acrshort{http} server running and able to respond to POST requests. The Fleet-Monitor is expecting to receive a response from the server with the status code of \texttt{200}. Otherwise it it will not clear the error.
@@ -154,7 +154,7 @@ In case the \acrshort{can} \acrshort{led} is blinking red, something went wrong 
 \newpage
 
 \subsection{Serial Monitor} \label{Serial Monitor}
-Diagnostics information is printed to the serial monitor to help the user debug an issue. Accessing the terminal can be done with just a few steps.
+Diagnostics information is printed to the serial monitor to help the user debug an issue. Accessing the terminal can be done in just a few steps.
 
 \begin{enumerate}
   \item Get a serial terminal tool for your computer. If you are running Windows, \mbox{\textit{TeraTerm}} is highly recommended. 
