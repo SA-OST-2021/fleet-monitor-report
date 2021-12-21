@@ -2,7 +2,7 @@
 
 %% Section Hardware Design %%
 \section{Hardware Design}
-The hardware of the Fleet-Monitor was design using Altium Designer 21. The integrated 3D \acrshort{cad} functionality simplified the overall development and lowered the chance of errors in the design. The 4-Layer \acrfull{pcb} with the size of 140.5\,mm\;x\;79.5\,mm has been manufactured and assembled by JLCPCB.\newline
+The hardware of the Fleet-Monitor was designed using Altium Designer 21. The integrated 3D \acrshort{cad} functionality simplified the overall development and lowered the possibility of errors in the design. The 4-Layer \acrfull{pcb} with the size of 140.5\,mm\;x\;79.5\,mm has been manufactured and assembled by JLCPCB.\newline
 As a proof of concept, five prototypes have been made, which are all fully tested and in working condition.
 
 \begin{figure}[h!]
@@ -15,7 +15,7 @@ As a proof of concept, five prototypes have been made, which are all fully teste
 \newpage
 
 \subsection{Block Diagram}
-The hardware block diagram on Figure \ref{fig:hardware-block-diagram} offers an overview of the system architecture of the Fleet-Monitor.
+The hardware block diagram in Figure \ref{fig:hardware-block-diagram} offers an overview of the system architecture.
 
 \medskip
 \begin{figure}[h!]
@@ -27,9 +27,9 @@ The hardware block diagram on Figure \ref{fig:hardware-block-diagram} offers an 
 \end{figure}
 
 \subsection{Power Management}
-The device can be powered ether by the \acrshort{usb}-Interface or an external \acrshort{dc} power source. Both supply options are internally connected through Schottky diodes and provide a seamless switch-over. If both supply sources provide power at the same time, the external \acrshort{dc} source is used.\newline
-The \acrfull{usb} Interface fulfills all guidelines of the \acrshort{usb} specifications in terms of power consumption. Therefore it is guaranteed, that the maximal current of 500\,mA is not exceeded. In case of failure, a resettable \acrshort{ptc} Poly-fuse protects the power source of potential over current.\newline
-The external power source accepts a voltage range from 9\,V to 28\,V and is protected against reverse polarization and short circuit. As a suitable connector, the industry standard M12\;(5\;Pin) type has been chosen. It fulfils the IP67 rating and is highly robust against accidental disconnection due to its threaded coupling. In addition it is used in a wide variety of applications, resulting in great availability. The pin-out consists of pin 1 and 2 used for the positive input and pins 3 to 5 for ground. This has the advantage, that matching connectors with a different amount of pins (e.g. 2-pin connector) can be used as well.
+The device can be powered either by the \acrshort{usb}-interface or an external \acrshort{dc} power source. Both supply options are internally connected through Schottky diodes and provide a seamless switch-over. If both supply sources provide power at the same time, the external \acrshort{dc} source is used.\newline
+The \acrfull{usb} Interface fulfills all guidelines of the \acrshort{usb} specifications in terms of power consumption. Therefore it is guaranteed, that the maximum current of 500\,mA is not exceeded. In case of failure, a resettable \acrshort{ptc} Poly-fuse protects the power source from over current.\newline
+The external power source accepts a voltage range from 9\,V to 28\,V and is protected against reverse polarization and short circuit. As a suitable connector, the industry-standard M12\;(5\;Pin) type has been chosen. It fulfills the IP67 rating and is highly robust against accidental disconnection due to its threaded coupling. In addition, it is used in a wide variety of applications, resulting in great availability. The pin-out consists of pin 1 and 2 used for the positive input and pins 3 to 5 for ground. This has the advantage, that matching connectors with a different amount of pins (e.g. 2-pin connector) can be used as well.
 
 \begin{wrapfigure}{r}{7.5cm}
 \vspace{-0.6cm}
@@ -38,11 +38,11 @@ The external power source accepts a voltage range from 9\,V to 28\,V and is prot
 \caption{Simplified Power Management}
 \label{fig:simplified-power}
 \end{wrapfigure} 
-The core of the power management unit is based on a Recom \acrshort{dc}/\acrshort{dc} converter of the RPMB-2.0 series. The very compact design, great performance and fairly low price offers an optimal solution. The internal system supply voltage is 3.3\,V and the total power consumption of the device is in average around 1.5\,W.
+The core of the power management unit is based on a Recom \acrshort{dc}/\acrshort{dc} converter of the RPMB-2.0 series. The very compact design, great performance and fairly low price offers an optimal solution. The internal system supply voltage is 3.3\,V and the total power consumption of the device is on average around 1.5\,W.
 \clearpage
 
 \subsection{ESP32-S2} \label{ESP32-S2}
-The choice of a suitable micro controller is crucial in the design of an embedded system. Several factors were carefully considered and key requirements have been set, such as:
+The choice of a suitable microcontroller is crucial in the design of an embedded system. Several factors were carefully considered and key requirements have been set, such as:
 
 \begin{itemize}
 		\item Integrated WiFi subsystem and \acrshort{rf} front-end
@@ -65,7 +65,7 @@ To reduce design complexity and production cost, the \gls{esp32}-S2 has been emb
 \end{figure}
 
 The \acrshort{soc} can be programmed ether by \acrshort{jtag} and a suitable programmer (e.g. Espressif's \gls{esp32}-Prog) or conveniently over the integrated \acrshort{usb}-Interface.\newline
-For uploading code via the \acrshort{usb}-Interface, the \gls{esp32}-S2 has to be set in to the device firmware update mode. This can be achieved by pressing the boot button while the device is booting (e.g. after powering on or a reset). If the boot button is not accessible, the user can force the device to enter the \acrshort{dfu} mode by setting a flag in the system configuration. This procedure gets further explained in the user manual section \ref{Firmware Update}.
+For uploading code via the \acrshort{usb}-Interface, the \gls{esp32}-S2 has to be set into the device firmware update mode. This can be achieved by pressing the boot button while the device is booting (e.g. after powering on or a reset). If the boot button is not accessible, the user can force the device to enter the \acrshort{dfu} mode by setting a flag in the system configuration. This procedure gets further explained in the user manual \ref{Firmware Update}.
 \newpage
 
 \subsection{Ethernet Interface}
@@ -133,27 +133,27 @@ A dual-channel digital isolator (ISO7221BDR) was used in conjunction with an iso
 \end{figure}
 
 \subsubsection{Filtering}
-A common mode choke as well as bypass capacitors were added to the differential signal lines. A common mode choke is an electrical filter that blocks high frequency noise common to two or more data or power lines while allowing the desired \acrshort{dc} or low-frequency signal to pass. \acrfull{cm} noise is typically radiated from sources such as radio signals, unshielded electronics, inverters and motors. Additionally matching capacitors on the CANH and CANL lines were added to enhance the immunity against electromagnetic interference. 
+A common mode choke, as well as bypass capacitors, were added to the differential signal lines. A common mode choke is an electrical filter that blocks high-frequency noise common to two or more data or power lines while allowing the desired \acrshort{dc} or low-frequency signal to pass. \acrfull{cm} noise is typically radiated from sources such as radio signals, unshielded electronics, inverters, and motors. Additionally matching capacitors on the CANH and CANL lines were added to enhance the immunity against electromagnetic interference. 
 
 \subsubsection{Connector}
-The \acrshort{fms} Standard specifies a \acrshort{din} 72585 connector as the default physical interface. Since these connectors are only available for panel mount, an additional wire to board connector was selected. A Molex Micro-Fit\,3.0 was chosen because its widely available and being used in tons of applications.
+The \acrshort{fms} Standard specifies a \acrshort{din} 72585 connector as the default physical interface. Since these connectors are only available for panel mount, an additional wire-to-board connector was selected. A Molex Micro-Fit\,3.0 was chosen because it is widely available and being used in lots of applications.
 
 \subsubsection{Termination}
-In addition the \acrshort{fms} Standard specifies a 120\,$\Omega$ \acrshort{can} termination resistor to be added on the monitor side. To fulfill this requirement and to make it compatible with system that do not need that resistor, a jumper was added to enable/disable the termination.   
+In addition the \acrshort{fms} Standard specifies a 120\,$\Omega$ \acrshort{can} termination resistor to be added on the monitor side. To fulfill this requirement and to make it compatible with systems that do not need that resistor, a jumper was added to enable/disable the termination. 
 
 \subsection{Accelerometer}
-By request of the industry partner an accelerometer was added to gather additional data. The LIS2DH12 is an ultra-low-power high-performance three-axis linear accelerometer with digital \acrshort{i2c}/\acrshort{spi} serial interface output. The sensor has user-selectable scales of ±2\,g up to ±16\,g and is capable of measuring accelerations with data rates from 1\,Hz to 5.3\,kHz. The sensor is connected through \acrshort{spi} to the \gls{esp32}.
+By request of the industry partner, an accelerometer was added to gather additional data. The LIS2DH12 is an ultra-low-power high-performance three-axis linear accelerometer with digital \acrshort{i2c}/\acrshort{spi} serial interface output. The sensor has user-selectable scales of ±2\,g up to ±16\,g and is capable of measuring accelerations with data rates from 1\,Hz to 5.3\,kHz. The sensor is connected through \acrshort{spi} to the \gls{esp32}.
 
 \newpage
 \section{Mechanical Design}
-The automotive environment is known for its harsh conditions, such as vibrations, large temperature fluctuation and high humidity. To ensure long-term reliability, the device must be resistant to these factors. To meet the requirements and achieve an IP67 rating, optimal component selection was critical. Especially the selection of the connectors was crucial. \newline
-An enclosure made of poly-carbonate with a transparent lid has been selected as a suitable case for the device. The very robust construction creates an ideal protection for all electronic components.\newline
+The automotive environment is known for its harsh conditions, such as vibrations, large temperature fluctuation and high humidity. To ensure long-term reliability, the device must be resistant to these factors. To meet the requirements and achieve an IP67 rating, optimal component selection was critical. Especially the selection of connectors was crucial. 
+An enclosure made of polycarbonate with a transparent lid has been selected as a suitable case for the device. The very robust construction creates an ideal protection for all electronic components.\newline
 The case has been machined in the internal workshop of the university. The corresponding mechanical drawings have been made with SolidWorks\;2020 and are attached in the Appendix: \ref{Fleet-Monitor V1.0 Mechanical Drawing}
 
 \medskip
 \begin{figure}[h!]
 	\centering
-	\includegraphics[height=16cm]{images/fleet-monitor-rendering}
+	\includegraphics[height=16.5cm]{images/fleet-monitor-rendering}
 	\caption{Final Product 3D-Render}
 	\label{fig:fleet-monitor-rendering}
 \end{figure}
@@ -162,12 +162,12 @@ The case has been machined in the internal workshop of the university. The corre
 %% Section Firmware %%
 \section{Firmware}
 The firmware is written in C++ and is based on a combination of the \gls{arduino} and the \gls{esp-idf} framework. As an \acrshort{ide}, Visual Studio Code with \gls{platformio} as an add-on has been used. This modern environment ensures rapid and effective development.\newline
-FreeRTOS has been used as a real time operating system, which guarantees a reliable operation and handles multi-task operations on a single core systems.\newline
-The Arduino framework offers extensive library support, especially for the \acrshort{usb} peripheral, file system and Ethernet interface. Due to the large community and the open source licensing, lots of individuals contribute bug-fixes and therefore increase the robustness of the software stack.
+FreeRTOS has been used as a real-time operating system, which guarantees a reliable operation and handles multi-task operations on single-core systems.\newline
+The Arduino framework offers extensive library support, especially for the \acrshort{usb} peripheral, file system and Ethernet interface. Thousands of users in the \gls{arduino} community make the framework more robust and reliable than other alternatives.
 
 \subsection{File system}
 The file system is an essential part of the device firmware. It enables accessing files stored on the internal \acrshort{spi}-Flash chip as well as creating an interface for additional libraries.
-The flash chip has a memory capacity of 4\,MB and is partitioned into four different sections. The size of each partition can be configured in the \textit{partitions\_custom.csv} file. Basically the memory is split into two partitions with ruffly the same size ($\approx$ 2\,KB each) as a reasonable compromise between program memory and file system storage.
+The flash chip has a memory capacity of 4\,MB and is partitioned into four different sections. The size of each partition can be configured in the \textit{partitions\_custom.csv} file. The two largest partitions are used for program memory and file system storage. Each of them has ruffly the size of $\approx$ 2\,KB.
 
 \begin{table}[h]
     \begin{tabular}{ | m{3.15cm} | m{3.15cm}| m{3.15cm} | m{3.15cm} |} 
@@ -182,7 +182,7 @@ The flash chip has a memory capacity of 4\,MB and is partitioned into four diffe
 \end{table}
 
 To provide a sufficient set of features, multiple libraries had to be used. Most of them are created by Adafruit Industries under \acrshort{mit} licensing. \newline
-As a low-level \acrshort{spi}-Flash chip driver, the \codeword{Adafruit SPIFlash} library has been used. It handles the communication over the physical interface and provides access to the file system library named  \codeword{SdFAT}. The type of file system is \acrshort{fat}, which has the advantage of being compatible with most modern operating systems (Windows/Linux/Mac OS). Figure \ref{fig:file_system_stack} shows an overview of all utilized core library and how they are dependent.
+As a low-level \acrshort{spi}-Flash chip driver, the \codeword{Adafruit SPIFlash} library has been used. It handles the communication over the physical interface and provides access to the file system library named  \codeword{SdFAT}. The type of file system is \acrshort{fat}, which has the advantage of being compatible with most modern operating systems (Windows/Linux/Mac OS). Figure \ref{fig:file_system_stack} shows an overview of all utilized core libraries and how they are dependent.
 
 \bigskip
 \begin{figure}[h!]
@@ -195,9 +195,9 @@ As a low-level \acrshort{spi}-Flash chip driver, the \codeword{Adafruit SPIFlash
 
 
 \subsection{USB Mass Storage Device}
-\acrshort{usb} is known to be a very complex interface, however it provides lots of comport to an end-user. To enable \acrshort{usb} support on an embedded system, several layers of software are needed. Fortunately the open source project called TinyUSB supports the \gls{esp32}-S2 \acrshort{soc} family. This very comprehensive software stack supports the \acrshort{usb} \acrfull{msc} protocol.
+\acrshort{usb} is known to be a very complex interface, however it provides lots of comfort to an end-user. To enable \acrshort{usb} support on an embedded system, several layers of software are needed. Fortunately, the open source project called TinyUSB supports the \gls{esp32}-S2 \acrshort{soc} family. This very comprehensive software stack supports the \acrshort{usb} \acrfull{msc} protocol.
 As a result, the device acts just like a regular \acrshort{usb} Flash drive and provides seamless file access to any host computer. \newline
-To pack all setup and configuration functions of the mentioned libraries together, an utility library has been made. The \codeword{utils_init()} function checks if the \acrshort{spi}-Flash chip has already been correctly formatted, if this is not the case, an automatic formatting procedure gets executed. In this process, a disk label can be set with a maximal length of 8 characters, in this case: \codeword{MONITOR}. The code section below shows how those utility functions are called at the beginning of the program execution.
+To pack all setup and configuration functions of the mentioned libraries together, utility functions were made. The \codeword{utils_init()} function checks if the \acrshort{spi}-Flash chip has already been correctly formatted, if this is not the case, an automatic formatting procedure gets executed. In this process, a disk label can be set with a maximal length of 8 characters, in this case: \codeword{MONITOR}. The code section below shows how those utility functions are called at the beginning of the program execution.
 
 \bigskip
 \colorlet{mygray}{black!30}
@@ -238,9 +238,9 @@ In addition to the \acrshort{usb} \acrshort{msc} protocol, a \acrfull{cdc} has b
 After initializing the \acrshort{usb}-Interface and file system, the device configuration is loaded from the locally stored \acrshort{json}-File, more details in the section \ref{System Configuration}.
 
 \subsection{JSON Parser Library} \label{JSON Parser Library}
-Due to the frequently usage of the \acrshort{json}-File format in this project, using an advanced software library was key to accelerate the development process. \\
-In this case, the open source ArduinoJSON library has been used. It makes use of modern C++14 syntax and is optimized for small architectures like micro controllers. In addition, support for static and dynamic data allocation simplifies the serializing and deserializing of files without a predefined size. This is especially useful for parsing incoming data over the Ethernet interface. \\[0.5em]
-The following code snippet shows how to iterate over a list of elements. If a matching entry has been found, the corresponding name gets returned as a char string. This example illustrates how intuitive the the iterating feature is applied and how fields can dynamically be manipulated.
+Due to the frequent usage of the \acrshort{json}-File format in this project, using an advanced software library was key to accelerating the development process. \\
+In this case, the open source ArduinoJSON library has been used. It makes use of modern C++14 syntax and is optimized for small architectures like microcontrollers. In addition, support for static and dynamic data allocation simplifies the serializing and deserializing of files without a predefined size. This is especially useful for parsing incoming data over the networking interface. \\[0.5em]
+The following code snippet shows how to iterate over a list of elements. If a matching entry has been found, the corresponding name gets returned as a char string. This example shows how the iterating feature can be applied intuitively and how fields can be manipulated dynamically.
 
 \bigskip
 \colorlet{mygray}{black!30}
@@ -285,7 +285,7 @@ for (JsonVariant value : doc["frames"].as<JsonArray>())
 \newpage
 
 \subsection{System Configuration} \label{System Configuration}
-The system configuration is defined in a \acrshort{json}-File called \codeword{system.json}, stored in the root directory of the file system. This file gets read and parsed on every startup or reset. The following parameter can be configured:
+The system configuration is defined in a \acrshort{json}-File called \codeword{system.json}, stored in the root directory of the file system. This file is loaded on every startup. The following parameter can be configured:
 
 \begin{table}[h]
     \hfuzz=23.0pt
@@ -308,8 +308,8 @@ The system configuration is defined in a \acrshort{json}-File called \codeword{s
 ** If set \codeword{True}, device reboots immediately in \acrshort{dfu} mode and field gets reset to \codeword{False}.
 
 \subsection{Frame Filter Configuration} \label{Frame Filter Configuration}
-The configuration of the \acrshort{fms}-Frame filter is based on a specific \acrshort{json}-File called \codeword{config.json}, which is as well stored in the root directory of the file system. In addition the filter configuration gets remotely downloaded from the host server if the \codeword{config} parameter in the system configuration is set to \codeword{remote}. This has the advantage of adjusting parameters in real time and therefore conveniently manage the data stream.
-Basically the \acrshort{json}-File consists two types of configuration parameters. First of all the general settings which describe how the data should be uploaded to the server: \\[0.3em]
+The configuration of the \acrshort{fms}-Frame filter is based on a specific \acrshort{json}-File called \codeword{config.json}, which is stored in the root directory of the file system. In addition the filter configuration can be downloaded from the host server if the \codeword{config} parameter in the system configuration is set to \codeword{remote}. This allows the user to adjust parameters while the device is in operation, even without physical access.
+Basically the \acrshort{json}-File consists of two types of configuration parameters. First of all the general settings which describe how the data should be uploaded to the server: \\[0.3em]
 \codeword{framename} enables or disables the transmission of the \acrshort{fms}-Packet name. Turning off this parameter, reduces the overall data upload size and thus minimizes network traffic. For debugging purpose, enabling this setting can help identifying \acrshort{fms}-Frames. \\[0.3em]
 \codeword{unknownframes} enables or disables the transmission of unknown \acrshort{fms}-Packets, meaning frames that are not listed in the configuration settings. \\[0.3em]
 The second part of the configuration file contains a look-up table with \acrshort{fms}-Frame information and filter settings in form of a list. The different filter types are further described in section \ref{FMS Frame Handler}. Each entry consists of multiple fields specified as followed:
@@ -395,10 +395,10 @@ The connection is checked every 5\,seconds and works as follows. First the hardw
 \acrfull{http} is used to communicate with the server and allows the Fleet-Monitor to read files and stream data. We decided to go with this technology because it is well supported by all libraries used. Data is transferred using \acrshort{http} POST requests containing data inside the body. The server response is used to check if the data was received correctly and validate the server connection. \acrshort{http} GET methods are used to read files from the server.
 
 \subsubsection{Time synchronization}
-In order for data to be useful it needs to have a timestamp. Ideally this timestamp would translate to a real time and date. This is why we implemented on both the server and client side a mechanism to synchronize the two. Every POST response from the server includes a \acrshort{json} string with a field called Date. This field represents the current date and time and is used by the Fleet-Monitor to set its real time clock. Since the \gls{esp32}-S2 WROOM module does not have a dedicated oscillator for time keeping, the default 40\,MHz crystal is used. The oscillator has a tolerance of ±\,10\,\acrshort{ppm}. The maximum 24\,hour drift can be calculated using the Equation \ref{eq:time}.
+In order for data to be useful it needs to have a timestamp. Ideally this timestamp would translate to a real time and date. This is why we implemented on both the server and client side a mechanism to synchronize the two. Every POST response from the server includes a \acrshort{json} string with a field called Date. This field represents the current date and time and is used by the Fleet-Monitor to set its real time clock. Since the \gls{esp32}-S2 WROOM module does not have a dedicated oscillator for time keeping, the default 40\,MHz crystal is used. This oscillator has a tolerance of ±\,10\,\acrshort{ppm}. The maximum 24\,hour drift can be calculated using the Equation \ref{eq:time}.
 \medskip
 \begin{equation}
-\delta_{rel} =  \frac{1\,s}{f} * \frac{f * \mathit{p}}{10^6} * t = \frac{1\,s}{40\,MHz} * \frac{40\,MHz * \pm\,10}{10^6} * 86400\,s =  \pm\,0.864\,s  
+\delta_{rel} =  \frac{1}{f} * \frac{f * \mathit{p}}{10^6} * t = \frac{1}{40\,MHz} * \frac{40\,MHz * \pm\,10}{10^6} * 86400\,s =  \pm\,0.864\,s  
 \label{eq:time}
 \end{equation}
 
@@ -406,16 +406,16 @@ where:
 
 \begin{conditions}
  f     &  frequency in Hz \\
- \mathit{p}     &  parts per million in \acrshort{ppm} \\
+ \mathit{p}     &  deviation in \acrshort{ppm} \\
  t     &  time in s \\
 \end{conditions}
 
-Since this drift is quite large, we decided to update the real time clock of the ESP32 every 24\,h to make sure both the server and the Fleet-Monitor always share the same time.
+Since this drift is quite large, we decided to update the real time clock of the \gls{esp32}-S2 every 24\,h to make sure both the server and the Fleet-Monitor always share the same time.
 
-The timestamp is read out as \codeword{YYYY,MM,DD,hh,mm,ss} and is stored locally in the \gls{unix} time format. 
+The timestamp is read out as \codeword{YYYY,MM,DD,hh,mm,ss} format and is stored locally in \gls{unix} time. 
 
 \subsubsection{File Reload}
-Additionally a mechanism was developed to automatically detect if a configuration file needs to be reloaded. A reload is needed when the file on the server was modified. Every \acrshort{http} POST response contains a \acrshort{json} field called \texttt{ConfigReload}. If this flag is set we will request the configuration file again from the server in order to clear the flag and get the newest configuration. The local configuration is then overwritten with the one from the server.
+Additionally a mechanism was developed to automatically detect if a configuration file needs to be reloaded. A reload is needed when the file on the server was modified. Every \acrshort{http} POST response contains a \acrshort{json} field called \texttt{ConfigReload}. If this flag is set we will request the configuration file again from the server in order to clear the flag and get the newest configuration. The local configuration can be overwritten with the one from the server, if the option is selected in the system configuration.
 
 \newpage
 \subsection{FMS Frames} \label{FMS Frame Handler}
@@ -428,19 +428,19 @@ Reading out frames from the \acrshort{can} bus, filtering them and finally trans
 \end{figure}
 
 \subsubsection{FMS Filter}
-Both tasks will only start running once a configuration was read from either the server or from the local file system. The configuration is explained in the Section \ref{Frame Filter Configuration}.
+Both tasks will only begin its execution once a configuration was read from either the server or from the local file system. The configuration is explained in the Section \ref{Frame Filter Configuration}.
 
 Generally a frame can be enabled and disabled for the transmission, this helps remove unwanted packages from taking up valuable bandwidth. Additionally three filter methods were implemented to reduce the data rate and repetition of useless information:
 \begin{itemize}
-		\item \textit{On Change}, data is only transmitted when something inside the data field of the frame changed. This is very useful for state supervision of error codes or door states. 
+		\item \textit{On Change}, data is only transmitted when something inside the data field of the frame has changed. This is very useful for state supervision of error codes or door states. 
 		\item \textit{Interval}, data is only transmitted with a set interval. Data in between the set interval is discarded. This filter method is used for things that are not very important but still good to know from time to time.
-		\item \textit{No Filter}, all the data received is being transmitted. This method is used for things that are very important to monitor.
+		\item \textit{No Filter}, all the data received is being transmitted. This method is used for things that need real-time supervision.
 \end{itemize}
 
 Data inside the queue is always sent out to the server. Therefore the filtering is done inside the \acrshort{can}-Read task and only adds data to the queue when it passes all the filters.  
 
 \subsubsection{JSON Format}
-In order to hold the \acrshort{fms} data from the queue, a \acrshort{json} buffer is allocated. The timestamp is added to each frame, and then all the other fields are added to the \acrshort{json} array. You can enable and disable the name in the configuration file. Adding the name simplifies parsing, but increases the data rate since it is added to every frame.
+In order to hold the \acrshort{fms} data from the queue, a \acrshort{json} buffer is allocated. The timestamp is added to each frame, and then all the other fields are added to the \acrshort{json} array. The user can enable and disable the name in the configuration file. Adding the name simplifies parsing, but increases the data rate since it is added to every frame.
 
 \begin{table}[h!]
     \begin{center}
@@ -468,14 +468,14 @@ In order to hold the \acrshort{fms} data from the queue, a \acrshort{json} buffe
 \caption{\label{fig:example-fms-data}Example FMS Data for Transmission}
 \end{table}
 
-The \acrshort{json} buffer can hold a maximum of 8\,KB. Single frames are added to the buffer until it can not hold any more information. At that point it is ready for the transmission.  
+The \acrshort{json} buffer can hold a maximum of 8\,KB. Single frames are added to the buffer until it is filled up. At that point it is ready for the transmission.  
 
 \subsubsection{Transmission}
-Data is communicated over the currently active interface, as previously explained in Section \ref{Networking}. The \acrshort{json} buffer is serialized into a single string before being sent to the server as part of an \acrshort{http} POST request. In normal operation, the server confirms the request with a status code of \texttt{200}. The \acrshort{json} buffer is discarded if a request to the server times out or if no confirmation is returned. This is due to the large amount of data collected by the bus. The length of the transmission body varies, however it is usually around 8000\,bytes. The period between POST requests is significantly depending on the filter technique, but without any filters, a transmission occurs every second or so.
+Data is communicated over the currently active networking interface, as previously explained in Section \ref{Networking}. The \acrshort{json} buffer is serialized into a single string before being sent to the server as part of an \acrshort{http} POST request. In normal operation, the server confirms the request with a status code of \texttt{200}. The \acrshort{json} buffer is discarded if a request to the server times out or if no confirmation is returned. This is due to the large amount of data collected by the bus. The length of the transmission body varies, however it is usually around 8000\,bytes. The period between POST requests is significantly depending on the filter technique, but without any active filters, a transmission occurs around every second.
 \newpage
 
 \subsection{Accelerometer}
-The acceleration is read out from its own task with an update rate of 50\,Hz. Since we are not using the data at this moment, we just read it out and leave its specific implementation open for future use.
+The acceleration is read out from its own task with an update rate of 50\,Hz. Since we are not using the data at this moment, we just read it out and leave its specific implementation open for the future.
 
 On boot up over a period of 5\,seconds, the accelerometer is calibrated to eliminate the offset on each axis and get rid of the gravity vector. The purpose of this is to make it easy to record high acceleration events. When the linear acceleration reaches a predefined threshold, the data can be transmitted to the server.
 
@@ -491,14 +491,14 @@ The axes of the accelerometer are oriented as shown in Figure \ref{fig:accel-axi
 
 \newpage
 \section{Utility Software Tools}
-Several software tools have been developed to support the hardware in its operation and to simplify the configuration of the device. These utilities were all written in the Python programming language. As a suitable platform to run the applications, a Raspberry Pi 400 has been chosen due to its performance and ease of use.
+Several software tools have been developed to support the hardware in its operation and to simplify the configuration of the device. These utilities were all written in the Python programming language. As a suitable platform to run the applications, a Raspberry Pi 400 was selected for its price and performance.
 
 \subsection{HTTP Server}
-The \acrshort{http} server was developed to communicate with the Fleet-Monitor. It was written with the help of an \acrshort{ai} system that translates natural language to code called OpenAI Codex\todo{Add this to Glossary}. It helped us to reduce the development time and produced good results for our application. The \acrshort{http} Server is a command line application that does not have a graphical user interface. Both \acrshort{http} GET and \acrshort{http} POST requests can be handled by the server. Each request to the server creates a new thread that will handle the response.
+A \acrshort{http} server was developed to communicate with the Fleet-Monitor. It was written with the help of an \acrshort{ai} system that translates natural language to code called \gls{openai-codex}. It helped us to reduce the development time and produced comprehensive results for our application. The \acrshort{http} Server is a command line application that does not have a graphical user interface. Both \acrshort{http} GET and \acrshort{http} POST requests can be handled by the server. Each request to the server creates a new thread that will handle the response. Making it possible to handle multiple requests at the same time.
 
-\acrshort{http} GET requests are used to access files stored locally. Filenames are included in the \acrshort{url} of the \acrshort{http} GET request. Using this method, multiple files may be served but we only use it for the configuration file. If the requested file is located in the server's directory, the server responds with status code \texttt{200} and serves it. Otherwise, an empty page is returned with a status code of \texttt{404}.
+\acrshort{http} GET requests are used to access files stored locally. Filenames are included in the \acrshort{url} of the \acrshort{http} GET request. Using this method, multiple files may be served. If the requested file is located in the servers directory, the server responds with status code \texttt{200} and serves it. Otherwise, an empty page is returned with a status code of \texttt{404}.
 
-Streaming data from the Fleet-Monitor to the server is extremely important for our application. To accomplish this we are using \acrshort{http} POST requests. The server expects a \acrshort{json} string of \acrshort{fms} data inside the body of the request, if the data is found and no errors are detected it will respond with a status code \texttt{200}. Moreover, the server will include the current time and date in the response, along with information if a file has changed in its directory. The \acrshort{json} string from the request is split and then stored locally in a \acrshort{csv} file. By using the \acrshort{fms} Data Visualizer, the data can then be interpreted. Example \acrshort{csv} data:
+Streaming data from the Fleet-Monitor to the server is extremely important for our application. To accomplish this we are using \acrshort{http} POST requests. The server expects a \acrshort{json} string of \acrshort{fms} data inside the body of the request, if the data is found and no errors are detected it will respond with a status code of \texttt{200}. Moreover, the server will include the current time and date in the response, along with the information if a file has been changed in its directory. The \acrshort{json} string from the request is split and then stored locally in a \acrshort{csv} file. By using the \acrshort{fms} Data Visualizer, the data can then be interpreted. Example \acrshort{csv} data:
 
 \bigskip
 \colorlet{mygray}{black!30}
@@ -551,10 +551,10 @@ Both the \acrshort{http} server and a utility tool called \textit{RaspAP} are ru
 
 \newpage
 \subsection{FMS Configuration Tool}
-Changing the configuration of the \acrshort{fms}-Frame filter in a text editor is not very pleasing. Therefore a \acrfull{gui} has been developed to make this procedure easier and ensure a better overview of all settings. This tool is able to generate the \acrshort{json}-File structure as mentioned in Section \ref{Frame Filter Configuration}.
+Changing the configuration of the \acrshort{fms}-Frame filter in a text editor is not very pleasant. Therefore a \acrfull{gui} has been developed to make this procedure easier and ensure a better overview of all settings. This tool is able to generate the \acrshort{json}-File structure as mentioned in Section \ref{Frame Filter Configuration}.
 
 \subsubsection{Feature Description}
-The configuration tool is decided into \textit{Global Settings} and \textit{Frame Settings}. The general options can be enabled or disabled by clicking on the corresponding checkbox. Further in the Frame Settings section, a table allows the user to change the filter settings of each \acrshort{fms}-Packet type. The filter features are described as followed:
+The configuration tool is divided into \textit{Global Settings} and \textit{Frame Settings}. The general options can be enabled or disabled by clicking on the corresponding checkbox. Further in the Frame Settings section, a table allows the user to change the filter behaviour of each \acrshort{fms}-Packet type. The filter features are described as followed:
 
 \begin{description}
   \item[Active:] Enables or disables the transmission of this specific packet type
@@ -574,8 +574,8 @@ The configuration tool is decided into \textit{Global Settings} and \textit{Fram
 \newpage
 
 \subsubsection{PyQt5}
-As a framework Qt Version 5 for Python, in short PyQt5 has been used. This very comprehensive software package enables rapid development of \acrshort{gui}s. One of several major advantages is the platform compatibility. Therefore the created tools run on different operating systems without the need of any changes to the code. The python interpreter executed the code in a closed environment and does not depend on additional libraries or packages except the PyQt5 framework. \\
-The dynamic scaling of the window including all of its features is essential as modern applications must be able to run on multiple screens with different resolutions.
+As a framework Qt Version 5 for Python, in short PyQt5, was used. This very comprehensive software package enables rapid development of \acrshort{gui}s. One of several major advantages is the platform compatibility. Therefore the tools run on all major operating systems without any changes to the code. The python interpreter executes the code in a closed environment and does only depend on the PyQt5 framework. No additional packages or frameworks are needed. \\
+The dynamic scaling of the window including all of its features is essential. Modern applications must be able to run on a variety of screen resolutions.
 
 \subsubsection{File Loading \& Saving}
 \begin{wrapfigure}{r}{4.0cm}
@@ -583,14 +583,14 @@ The dynamic scaling of the window including all of its features is essential as 
 \includegraphics[width=4.0cm]{images/configuration-tool-file-panel}
 \caption{File Menu-Bar}
 \end{wrapfigure} 
-To open an existing configuration file, three methods are available. Firstly via the menu-bar section, by clicking on the \textit{Open} button. Secondly by entering the keyboard shortcut \textit{Ctrl+O} and thirdly by dragging a file into the application. Saving files is very similar and intuitive due to the use of common shortcuts.
+To open an existing configuration file, three methods are available. Firstly via the menu-bar section, by clicking on the \textit{Open} button. Secondly by using the keyboard shortcut \textit{Ctrl+O} and lastly by dragging a file into the application. Saving files is very similar and intuitive due to the use of common shortcuts.
 %\newpage
 
 \subsection{FMS Data Visualizer}
-As the host server receives the incoming data in raw HEX format, post processing is needed to gain access to the contained information. To demonstrate this procedure, a Python script has been developed to parse and visualize \acrshort{fms}-Data. 
+Since the host server receives the data in raw HEX format, post processing is needed to gain access to the contained information. To demonstrate this procedure, a Python script has been developed to parse and visualize \acrshort{fms}-Data. 
 
 \subsubsection{FMS Frame Parsing}
-The \acrshort{fms}-Standard describes in detail how each frame type is packed with information. In the scope of this project, the focus has been set on parsing the most common frame types. As mentioned in Section\;\ref{Fleet Management System (FMS)}, a frame contains 8\,bytes of data. Figure\;\ref{fig:fms_frame_example} shows an example how the ambient air temperature has to be decoded. In this case, only 2\,bytes (Data Byte 4 \& 5) are used. 
+The \acrshort{fms}-Standard describes in detail how each frame type can be decoded. In the scope of this project, the focus has been set on parsing the most common frame types. As mentioned in Section\;\ref{Fleet Management System (FMS)}, a frame contains 8\,bytes of data. Figure\;\ref{fig:fms_frame_example} shows an example of how the ambient air temperature is encoded. In this case, only 2\,bytes (Data Byte 4 \& 5) are used. 
 
 \begin{figure}[h!]
 	\centering
@@ -599,7 +599,7 @@ The \acrshort{fms}-Standard describes in detail how each frame type is packed wi
 	\label{fig:fms_frame_example}
 \end{figure}
 
-The Python code snippet below shows how to extract the ambient air temperature of the raw input data. The bytes are ordered as \textit{little-endian}. The parser concatenates the individual bytes and applies a global gain and offset. In this case a gain of 0.03125\,°C\,/\,Bit and an offset of -273\,°C gets applied.
+The Python code snippet below shows how to extract the ambient air temperature of the raw input data. The bytes are ordered as \textit{little-endian}. The parser concatenates the individual bytes and applies global scaling and offset. In this case a scaling of 0.03125\,°C\,/\,Bit and an offset of -273\,°C gets applied.
 
 \bigskip
 \colorlet{mygray}{black!30}
@@ -637,7 +637,7 @@ amb["ambientAir"] = (amb["3"] + amb["4"] * 256) * 0.03125 - 273.0
 \newpage
 
 \subsubsection{List of Supported Frames}
-The current version of the \acrshort{fms} Data Visualizer supports parsing of the following frame types listed in Table \ref{tab:supported-fms-frames}. Note that this tool is made for demonstration purposes only.
+The current version of the \acrshort{fms} Data Visualizer supports parsing the following frame types listed in Table \ref{tab:supported-fms-frames}. Note that this tool is made for demonstration purposes only.
 
 \begin{table}[h!]
     \hfuzz=23.0pt
@@ -662,7 +662,7 @@ The current version of the \acrshort{fms} Data Visualizer supports parsing of th
 \end{table}
 
 \subsubsection{Plotly Library}
-As a visualizing framework \textit{Plotly} has been used. It enables creating modern looking interactive diagrams. A great advantage is the web-based interface which allows updating the plot in real time. The Figure shows an example of visualizing a \acrshort{fms}-Data dump from a public transport bus in Germany.
+As a visualizing framework \textit{Plotly} was used. The framework enables creating modern looking interactive diagrams. A great advantage is the web-based interface which allows updating the plot in real time. The Figure shows an example of visualizing a \acrshort{fms}-Data dump from a public transport bus in Germany.
 
 \begin{figure}[h!]
 	\centering

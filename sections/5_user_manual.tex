@@ -95,7 +95,7 @@ The Fleet-Monitor uses two \acrshort{rgb} \acrshort{led}s to indicate the curren
 Normally this status clears within one or two breathing cycles. If the status does not clear the device is most likely in a boot loop. If this happens something is seriously wrong with the hard- or software. Refer to Section \ref{Hard Reset} for a resolution.
 
 \subsubsection{Unable to connect to network}
-The blue \acrshort{led} will breath while the device is trying to establish a network connection. Connecting over WiFi or Ethernet can take up to one minute. The status is cleared as soon as a connection is received and an \acrshort{ip} address was assigned. If no connection can be established over a extended period of time the following things should be checked in order.
+The blue \acrshort{led} will breathe while the device is trying to establish a network connection. Connecting over WiFi or Ethernet can take up to one minute. The status is cleared as soon as a connection is received and an \acrshort{ip} address was assigned. If no connection can be established over an extended period of time the following things should be checked in order.
 
 \textbf{Connecting over WiFi:}
 \begin{enumerate}
@@ -111,10 +111,10 @@ The blue \acrshort{led} will breath while the device is trying to establish a ne
   \begin{itemize}
       \item Make sure the \acrlong{ap} is powered on.
       \item Make sure the RJ45 cable is plugged in completely on both sides.
-      \item Make sure the RJ45 cable cable is not faulty.
+      \item Make sure the RJ45 cable is not faulty.
       \item Try connecting another device to the RJ45 cable and see if it receives a connection.
   \end{itemize}
-  If all of these pass you may have a soft- or hardware issue. Refer to Section \ref{Hard Reset} for a resolution.
+  If all of these checks pass you may have a soft- or hardware issue. Refer to Section \ref{Hard Reset} for a resolution.
   \item Make sure the \acrlong{ap} is capable of \acrshort{dhcp}. The Fleet-Monitor gets the \acrshort{ip} address through the \acrlong{dhcp}. There is no support for static \acrshort{ip} addresses.
 \end{enumerate}
 \newpage
@@ -123,7 +123,7 @@ The blue \acrshort{led} will breath while the device is trying to establish a ne
 If the status \acrshort{led} is not cleared after a short while, the Fleet-Monitor is unable to establish a connection to the server. The device is connected to an \acrshort{ap}, received an \acrshort{ip} address but the \acrshort{http} POST requests are unanswered or a bad status is returned. The following things should be checked to resolve this issue.
 
 \begin{enumerate}
-  \item Make sure the \acrshort{http} server running and able to respond to POST requests. The Fleet-Monitor is expecting to receive a response from the server with the status code of \texttt{200}. Otherwise it it will not clear the error.
+  \item Make sure the \acrshort{http} server is running and can respond to POST requests. The Fleet-Monitor is expecting to receive a response from the server with the status code of \texttt{200}. Otherwise, it will not clear the error.
   \item Make sure the \acrshort{ip} address and port are configured correctly in the system configuration file.
   \item Make sure to check if a request times out or an error code is returned from the server. The Fleet-Monitor will print the server response to the serial port. Section \ref{Serial Monitor} explains how to access the serial port.
 \end{enumerate}
@@ -133,7 +133,7 @@ If the status \acrshort{led} is blinking red the device was unable to load the c
 
 A missing or corrupt file system is possible if the configuration can not be loaded locally.
 
-To force manual reformatting of the file system, the \textit{boot} button must be pressed at least 5 seconds while the device is in operation (not during a reset of the device).\\
+To force manual reformatting of the file system, the \textit{boot} button must be pressed for 5 seconds while the device is in operation (not during a reset of the device).\\
 \textbf{ATTENTION: THIS PROCEDURE WILL DELETE ALL FILES!}
 
 In case the system is configured to load the file from the server you may need to refer to the error: Unable to establish server connection \ref{Unable to establish server connection}. The only difference is that these requests are done with \acrshort{http} GET instead of POST. Make sure your server can handle the requests to the Fleet-Monitor's specification.
@@ -159,15 +159,48 @@ Diagnostics information is printed to the serial monitor to help the user debug 
 \begin{enumerate}
   \item Get a serial terminal tool for your computer. If you are running Windows, \mbox{\textit{TeraTerm}} is highly recommended. 
   \item Connect the Fleet-Monitor to your computer with a \acrshort{usb} cable.
-  \item Locate the assigned COM port (e.g. using the \textit{Device Manager} on Windows).
-  \item Run your serial terminal tool and connect to the open port.
+  \item Locate the assigned serial port (e.g. using the \textit{Device Manager} on Windows).
+  \item Run your serial terminal tool and connect to the open port. In \mbox{\textit{TeraTerm}}, under \textit{File {$\rightarrow$} New Connection} the serial port can be selected as shown in Figure \ref{fig:tera-connect}. Your port may vary. 
+  \begin{figure}[h!]
+	\centering
+	\includegraphics[width=9.2cm]{images/tera-connect}
+	\caption{Open serial port through \mbox{\textit{TeraTerm}}}
+	\label{fig:tera-connect}
+\end{figure}
+    \item Information is now being printed to the terminal and should look something like the example below.
+    \bigskip
+    \colorlet{mygray}{black!30}
+    \colorlet{mygreen}{green!60!blue}
+    \colorlet{mymauve}{red!60!blue}
+    \begin{lstlisting}[backgroundcolor=\color{gray!10},  
+                       basicstyle=\ttfamily,
+                       columns=fullflexible,
+                       breakatwhitespace=false,      
+                       breaklines=true,                
+                       captionpos=b,                    
+                       commentstyle=\color{mygreen}, 
+                       extendedchars=true,              
+                       frame=single,                   
+                       numbers=none,                
+                       numbersep=5pt,                   
+                       numberstyle=\color{blue}, 
+                       rulecolor=\color{mygray},        
+                       showspaces=false,
+                       showstringspaces=false,
+                       showtabs=false,                 
+                       stepnumber=5,                  
+                       stringstyle=\color{mymauve},    
+                       tabsize=2,                      
+                       title=\lstname,
+                       frame=none,
+                       xleftmargin = 1cm,
+                       framexleftmargin = 1em]
+    Connected over WiFi
+    Loading config from server
+    Status code: 200
+    Config loading successful!
+    \end{lstlisting}
 \end{enumerate}
 
-\todo[inline]{Maybe add some images? - Sure, but will have to do this in school tomorrow, since I don't have a working device at home...}
-
 \subsection{Hard Reset} \label{Hard Reset}
-If there is a serious issue with the device, the first action should be to reformat the file system and then upload the configuration files again. If this did not resolve the problem you may want to flash a known to be working firmware to the device. This is explained in Section \ref{Firmware Update}. In the event that the issue still persists, some parts of the hardware could be damaged and need to be replaced.
-
-
-
-
+If there is a serious issue with the device, the first action should be to reformat the file system and then upload the configuration files again. If this did not resolve the problem you may want to flash a known to be working firmware to the device. This is explained in Section \ref{Firmware Update}. If the issue persists, some parts of the hardware could be damaged and need to be replaced.
